@@ -1,0 +1,11 @@
+.products-container {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @media only screen and (max-width: $phone) {
+    gap: 0 40px;
+    justify-content: center;
+  }
+}

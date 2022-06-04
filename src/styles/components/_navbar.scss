@@ -1,0 +1,92 @@
+.navbar-container {
+  height: 60px;
+
+  @media only screen and (max-width: $phone) {
+    height: 50px;
+  }
+
+  &__wrapper {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media only screen and (max-width: $phone) {
+      padding: 10px 0;
+    }
+
+    .left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+
+      span {
+        font-size: 14px;
+        cursor: pointer;
+
+        @media only screen and (max-width: $phone) {
+          display: none;
+        }
+      }
+
+      .search-container {
+        border: 0.5px solid lightgrey;
+        display: flex;
+        align-items: center;
+        margin-left: 25px;
+        padding: 5px;
+
+        input {
+          border: none;
+
+          @media only screen and (max-width: $phone) {
+            width: 50px;
+          }
+        }
+      }
+    }
+
+    .logo {
+      text-decoration: none;
+      color: black;
+
+      .center {
+        flex: 1;
+        text-align: center;
+
+        h1 {
+          font-weight: bold;
+
+          @media only screen and (max-width: $phone) {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      @media only screen and (max-width: $phone) {
+        justify-content: center;
+        flex: 2;
+      }
+
+      .menu-item {
+        font-size: 14px;
+        cursor: pointer;
+        margin-left: 25px;
+        text-decoration: none;
+        color: black;
+
+        @media only screen and (max-width: $phone) {
+          font-size: 12px;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
