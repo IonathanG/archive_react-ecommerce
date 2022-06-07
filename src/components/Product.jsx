@@ -21,14 +21,13 @@ const Product = ({ item }) => {
     if (!favoriteRef.current.contains(e.target))
       navigate(`/product/${item.id}`);
     else {
-      setIsFavorite((prevState) => !prevState);
       dispatch(handleWishList(item.id));
     }
   };
 
   useEffect(() => {
     wishList.includes(item.id) ? setIsFavorite(true) : setIsFavorite(false);
-  }, []);
+  }, [wishList, item.id]);
 
   return (
     <div className="product-container" onClick={(e) => handleClick(e)}>

@@ -42,7 +42,7 @@ const Cart = () => {
       <div className="wrapper">
         <h1>YOUR SHOPPING BAG</h1>
         <div className="top">
-          <NavLink to="/product-list" className="">
+          <NavLink to="/product-list">
             <button className="topButton transparent">CONTINUE SHOPPING</button>
           </NavLink>
           <div className="topTexts">

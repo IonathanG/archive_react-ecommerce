@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { sliderItems } from "../data";
 
@@ -7,16 +7,20 @@ const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isSliderClicked, setIsSliderClicked] = useState(false);
 
-  //animate the slider until click
-  const sliderAnim = setTimeout(function () {
-    if (!isSliderClicked) {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
-    }
-  }, 2500);
+  //animates the slider until click
+  //useEffect cancels warning for update State on unmounted component
+  useEffect(() => {
+    const sliderAnim = setTimeout(function () {
+      if (!isSliderClicked) setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+    }, 2500);
+
+    return () => {
+      if (sliderAnim) clearTimeout(sliderAnim);
+    };
+  });
 
   const handleClick = (direction) => {
     setIsSliderClicked(true);
-    clearTimeout(sliderAnim);
 
     if (direction === "left") {
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
