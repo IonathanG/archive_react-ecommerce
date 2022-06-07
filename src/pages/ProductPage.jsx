@@ -4,8 +4,9 @@ import Footer from "../components/Footer";
 import { Add, Remove } from "@material-ui/icons";
 import { useParams } from "react-router-dom";
 import { popularProducts } from "../data";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem } from "../feature/cartSlice";
+import { NavLink } from "react-router-dom";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -47,6 +48,9 @@ const ProductPage = () => {
 
   return (
     <div className="page-product-container">
+      <NavLink to="/product-list">
+        <button className="topButton">CONTINUE SHOPPING</button>
+      </NavLink>
       <div className="wrapper">
         <div className="img-container">
           {/* <img src="https://i.ibb.co/S6qMxwr/jean.jpg" alt="picture_of_item" /> */}
@@ -67,11 +71,11 @@ const ProductPage = () => {
                 onClick={() => handleColor("black")}
               ></div>
               <div
-                className={`filter-color blue ${
-                  colorSelected === "blue" ? "filter-selected" : ""
+                className={`filter-color darkblue ${
+                  colorSelected === "darkblue" ? "filter-selected" : ""
                 }`}
-                value="blue"
-                onClick={() => handleColor("blue")}
+                value="darkblue"
+                onClick={() => handleColor("darkblue")}
               ></div>
               <div
                 className={`filter-color gray ${
@@ -120,7 +124,7 @@ const ProductPage = () => {
                     color: colorSelected,
                     size: sizeSelected,
                     id,
-                    //   ref,
+                    //ref,
                   })
                 )
               }

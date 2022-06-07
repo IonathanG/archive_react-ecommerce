@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <div className="footer-container">
       <div className="left">
-        <h1 className="logo">LAMA.</h1>
+        <h1 className="logo">IONY.</h1>
         <p className="description">
           There are many variations of passages of Lorem Ipsum available, but
           the majority have suffered alteration in some form, by injected
@@ -60,7 +60,7 @@ const Footer = () => {
         </div>
         <div className="contact-item">
           <MailOutline style={{ marginRight: "10px" }} />
-          contact@lama.dev
+          contact@iony.dev
         </div>
         <img src="https://i.ibb.co/Qfvn4z6/payment.png" alt="payment_logo" />
       </div>

@@ -5,8 +5,19 @@ import { sliderItems } from "../data";
 
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
+  const [isSliderClicked, setIsSliderClicked] = useState(false);
+
+  //animate the slider until click
+  const sliderAnim = setTimeout(function () {
+    if (!isSliderClicked) {
+      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+    }
+  }, 2500);
 
   const handleClick = (direction) => {
+    setIsSliderClicked(true);
+    clearTimeout(sliderAnim);
+
     if (direction === "left") {
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
     } else {
