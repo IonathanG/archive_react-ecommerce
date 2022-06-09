@@ -53,7 +53,6 @@ const ProductPage = () => {
       </NavLink>
       <div className="wrapper">
         <div className="img-container">
-          {/* <img src="https://i.ibb.co/S6qMxwr/jean.jpg" alt="picture_of_item" /> */}
           <img src={product_img} alt="picture_of_item" />
         </div>
         <div className="info-container">

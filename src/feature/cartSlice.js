@@ -95,7 +95,7 @@ export const cartSlice = createSlice({
 
       if (state.wishList.length > 0) {
         for (let i = 0; i < state.wishList.length; i++) {
-          state.wishList[i] !== payload
+          state.wishList[i].id !== payload.id
             ? newArray.push(state.wishList[i])
             : (itemFound = true);
         }

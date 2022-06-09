@@ -21,24 +21,40 @@ const Product = ({ item }) => {
     if (!favoriteRef.current.contains(e.target))
       navigate(`/product/${item.id}`);
     else {
-      dispatch(handleWishList(item.id));
+      dispatch(
+        handleWishList({
+          name: item.name,
+          price: item.price,
+          img: item.img,
+          id: item.id,
+        })
+      );
     }
   };
 
   useEffect(() => {
-    wishList.includes(item.id) ? setIsFavorite(true) : setIsFavorite(false);
+    let itemFound = false;
+
+    for (let i = 0; i < wishList.length; i++) {
+      if (wishList[i].id === item.id) itemFound = true;
+    }
+    itemFound ? setIsFavorite(true) : setIsFavorite(false);
   }, [wishList, item.id]);
 
   return (
     <div className="product-container" onClick={(e) => handleClick(e)}>
       <div className="circle"></div>
-      <img src={item.img} alt="" />
+      <img src={item.img} alt="product_image" />
       <div className="info">
         <div className="icon">
           <SearchOutlined />
         </div>
         <div className="icon iconFavorite" ref={favoriteRef}>
-          {isFavorite ? <Favorite /> : <FavoriteBorderOutlined />}
+          {isFavorite ? (
+            <Favorite style={{ color: "red" }} />
+          ) : (
+            <FavoriteBorderOutlined />
+          )}
         </div>
       </div>
     </div>
