@@ -16,6 +16,7 @@ const Product = ({ item }) => {
   const favoriteRef = useRef();
 
   const [isFavorite, setIsFavorite] = useState(false);
+  const [animFavorite, setAnimFavorite] = useState(false);
 
   const handleClick = (e) => {
     if (!favoriteRef.current.contains(e.target))
@@ -29,6 +30,7 @@ const Product = ({ item }) => {
           id: item.id,
         })
       );
+      setAnimFavorite((prevState) => !prevState);
     }
   };
 
@@ -51,7 +53,9 @@ const Product = ({ item }) => {
         </div>
         <div className="icon iconFavorite" ref={favoriteRef}>
           {isFavorite ? (
-            <Favorite style={{ color: "red" }} />
+            <Favorite
+              className={`isFavorite ${animFavorite ? "animFavorite" : ""}`}
+            />
           ) : (
             <FavoriteBorderOutlined />
           )}
