@@ -51,7 +51,7 @@ export const popularProducts = [
   {
     id: 1,
     name: "Denim Jumpsuit",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVKnWslSXJWBq1kXC19gDguxmN4eEqd3Jfag82xtAP784HZsD_inQoSnYkfqHBPCpxhrE&usqp=CAU",
+    img: "https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, porro? Animi, nobis harum dolor architecto tempore in dicta et repudiandae? Sit consequuntur in magni suscipit eveniet quam voluptatem repudiandae velit?",
     price: 20,
   },
@@ -86,7 +86,7 @@ export const popularProducts = [
   {
     id: 6,
     name: "Denim Jumpsuit",
-    img: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/1-index-white-sneakers-1629830273.jpg?crop=0.373xw:0.746xh;0.309xw,0.173xh&resize=640:*",
+    img: "https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, porro? Animi, nobis harum dolor architecto tempore in dicta et repudiandae? Sit consequuntur in magni suscipit eveniet quam voluptatem repudiandae velit?",
     price: 20,
   },

@@ -14,14 +14,13 @@ const Product = ({ item }) => {
 
   const navigate = useNavigate();
   const favoriteRef = useRef();
+  const detailRef = useRef();
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [animFavorite, setAnimFavorite] = useState(false);
 
   const handleClick = (e) => {
-    if (!favoriteRef.current.contains(e.target))
-      navigate(`/product/${item.id}`);
-    else {
+    if (favoriteRef.current.contains(e.target)) {
       dispatch(
         handleWishList({
           name: item.name,
@@ -31,6 +30,8 @@ const Product = ({ item }) => {
         })
       );
       setAnimFavorite((prevState) => !prevState);
+    } else {
+      navigate(`/product/${item.id}`);
     }
   };
 
@@ -48,7 +49,7 @@ const Product = ({ item }) => {
       <div className="circle"></div>
       <img src={item.img} alt="product_image" />
       <div className="info">
-        <div className="icon">
+        <div className="icon" ref={detailRef}>
           <SearchOutlined />
         </div>
         <div className="icon iconFavorite" ref={favoriteRef}>

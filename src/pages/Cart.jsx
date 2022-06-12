@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../components/Footer";
 import { Add, DeleteOutline, Remove } from "@material-ui/icons";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import UserContext from "../context/UserContext";
 import {
   addQuantity,
   removeQuantity,
@@ -12,6 +13,8 @@ import {
 } from "../feature/cartSlice";
 
 const Cart = () => {
+  const { user } = useContext(UserContext);
+
   const dispatch = useDispatch();
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const listItems = useSelector((state) => state.cart.listItems);
@@ -44,9 +47,9 @@ const Cart = () => {
       <div className="wrapper">
         <h1>{showWishList ? "YOUR WISH LIST" : "YOUR SHOPPING BAG"}</h1>
         <div className="top">
-          <NavLink to="/product-list">
+          <Link to="/product-list">
             <button className="topButton transparent">CONTINUE SHOPPING</button>
-          </NavLink>
+          </Link>
           <div className="topTexts">
             <span className="topText" onClick={() => setShowWishList(false)}>
               Shopping Bag ({totalQuantity})
@@ -110,34 +113,52 @@ const Cart = () => {
                 </div>
               ))}
             </div>
-            <div className="summary">
-              <h1 className="summary-title">ORDER SUMMARY</h1>
-              <div className="summary-item">
-                <span className="summary-item-text">Subtotal</span>
-                <span className="summary-item-price">$ {totalPrice}</span>
+            {listItems.length > 0 && (
+              <div className="summary">
+                <h1 className="summary-title">ORDER SUMMARY</h1>
+                <div className="summary-item">
+                  <span className="summary-item-text">Subtotal</span>
+                  <span className="summary-item-price">$ {totalPrice}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-item-text">Estimated Shipping</span>
+                  <span className="summary-item-price">
+                    {listItems.length > 0 ? "$ 5.90" : "$ 0"}
+                  </span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-item-text">Shipping Discount</span>
+                  <span className="summary-item-price">
+                    $ {freeShipping ? "-5.90" : "0"}
+                  </span>
+                </div>
+                <div className="summary-item total">
+                  <span className="summary-item-text">Total</span>
+                  <span className="summary-item-price">
+                    $ {freeShipping ? totalPrice - 5.9 : totalPrice}
+                  </span>
+                </div>
+                {user && (
+                  <button onClick={() => dispatch(deleteCart())}>
+                    CHECKOUT NOW
+                  </button>
+                )}
+                {!user && (
+                  <div className="summary-no-User">
+                    {" "}
+                    PLEASE{" "}
+                    <Link to={"/login"} className="summary-no-User__Link">
+                      LOGIN{" "}
+                    </Link>
+                    OR CREATE A{" "}
+                    <Link to={"/register"} className="summary-no-User__Link">
+                      NEW ACCOUNT{" "}
+                    </Link>
+                    TO CHECKOUT
+                  </div>
+                )}
               </div>
-              <div className="summary-item">
-                <span className="summary-item-text">Estimated Shipping</span>
-                <span className="summary-item-price">
-                  {listItems.length > 0 ? "$ 5.90" : "$ 0"}
-                </span>
-              </div>
-              <div className="summary-item">
-                <span className="summary-item-text">Shipping Discount</span>
-                <span className="summary-item-price">
-                  $ {freeShipping ? "-5.90" : "0"}
-                </span>
-              </div>
-              <div className="summary-item total">
-                <span className="summary-item-text">Total</span>
-                <span className="summary-item-price">
-                  $ {freeShipping ? totalPrice - 5.9 : totalPrice}
-                </span>
-              </div>
-              <button onClick={() => dispatch(deleteCart())}>
-                CHECKOUT NOW
-              </button>
-            </div>
+            )}
           </div>
         )}
         {showWishList && (
