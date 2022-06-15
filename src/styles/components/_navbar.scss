@@ -87,6 +87,52 @@
           margin-left: 10px;
         }
       }
+
+      .logged-in {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        position: relative;
+
+        @media only screen and (max-width: $phone) {
+          gap: 8px;
+        }
+
+        p {
+          span {
+            font-weight: 700;
+          }
+        }
+
+        .log-out {
+          cursor: pointer;
+          transform: scale(0.9);
+          transition: 0.4s ease;
+          opacity: 0.6;
+
+          &:hover {
+            transform: scale(0.94);
+            opacity: 0.85;
+          }
+        }
+
+        .log-out-popup {
+          opacity: 0;
+          position: absolute;
+          border: 1px solid black;
+          border-radius: 2px;
+          top: 30px;
+          right: -20px;
+          font-size: 12px;
+          padding: 3px 6px;
+          transition: 0.3s ease;
+        }
+
+        .log-out-popup__visible {
+          opacity: 0.9;
+        }
+      }
     }
   }
 }

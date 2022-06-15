@@ -1,6 +1,6 @@
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import React, { useContext } from "react";
+import { Search, ShoppingCartOutlined, ExitToApp } from "@material-ui/icons";
+import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const { user, handleLogout } = useContext(UserContext);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+
+  const [showPopup, setShowPopup] = useState(false);
 
   return (
     <div className="navbar-container">
@@ -26,19 +28,41 @@ const Navbar = () => {
         </NavLink>
         <div className="right">
           {!user && (
-            <NavLink to="/register" className="menu-item">
+            <NavLink
+              to="/register"
+              className="menu-item"
+              onClick={() => setShowPopup(false)}
+            >
               <div>REGISTER</div>
             </NavLink>
           )}
           {!user && (
-            <NavLink to="/login" className="menu-item">
+            <NavLink
+              to="/login"
+              className="menu-item"
+              onClick={() => setShowPopup(false)}
+            >
               <div>SIGN IN</div>
             </NavLink>
           )}
           {user && (
-            <div>
-              <p>Welcome, X</p>
-              <button onClick={() => handleLogout()}>Logout</button>
+            <div className="logged-in">
+              <p>
+                Welcome, <span>{user.displayName}</span>
+              </p>
+              <ExitToApp
+                className="log-out"
+                onClick={() => handleLogout()}
+                onMouseEnter={() => setShowPopup(true)}
+                onMouseLeave={() => setShowPopup(false)}
+              ></ExitToApp>
+              <div
+                className={`log-out-popup ${
+                  showPopup ? "log-out-popup__visible" : ""
+                }`}
+              >
+                Sign Out
+              </div>
             </div>
           )}
           <NavLink to="/cart" className="menu-item">

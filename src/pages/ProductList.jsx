@@ -1,47 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 
 const ProductList = () => {
+  const typeOptions = [
+    { value: "all", text: "All" },
+    { value: "t-shirt", text: "T-Shirt" },
+    { value: "shirt", text: "Shirt" },
+    { value: "dress", text: "Dress" },
+    { value: "coat", text: "Coat" },
+    { value: "bag", text: "Bag" },
+    { value: "hat", text: "Hat" },
+  ];
+
+  const sizeOptions = [
+    { value: "XS", text: "XS" },
+    { value: "S", text: "S" },
+    { value: "M", text: "M" },
+    { value: "L", text: "L" },
+    { value: "XL", text: "XL" },
+  ];
+
+  const [typeSelected, setTypeSelected] = useState("all");
+  const [sortBySelected, setSortBySelected] = useState("default");
+
   return (
     <div className="productList-container">
       <h1>Experience Style</h1>
       <div className="filter-container">
         <div className="filter">
           <span>Filter Products:</span>
-          <select defaultValue={"DEFAULT"} style={{ size: "15" }}>
+          <select
+            defaultValue={"DEFAULT"}
+            style={{ size: "15" }}
+            onChange={(e) => setTypeSelected(e.target.value)}
+          >
             <option value="DEFAULT" disabled>
-              Color
+              Type
             </option>
-            <option>White</option>
-            <option>Black</option>
-            <option>Red</option>
-            <option>Blue</option>
-            <option>Yellow</option>
-            <option>Green</option>
+            {typeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.text}
+              </option>
+            ))}
           </select>
           <select defaultValue={"DEFAULT"}>
             <option value="DEFAULT" disabled>
               Size
             </option>
-            <option>XS</option>
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
+            {sizeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.text}
+              </option>
+            ))}
           </select>
         </div>
         <div className="filter">
           <span>Sort Products:</span>
-          <select defaultValue={"DEFAULT"}>
+          <select
+            defaultValue={"DEFAULT"}
+            onChange={(e) => setSortBySelected(e.target.value)}
+          >
             <option value="DEFAULT">Newest</option>
-            <option>Price (asc)</option>
-            <option>Price (desc)</option>
+            <option value={"price_up"}>Price (asc)</option>
+            <option value={"price_down"}>Price (desc)</option>
           </select>
         </div>
       </div>
-      <Products />
+      <Products type={typeSelected} sortBy={sortBySelected} />
       <Newsletter />
       <Footer />
     </div>

@@ -43,7 +43,6 @@ const ProductPage = () => {
 
   const handleColor = (option) => {
     setColorSelected(option);
-    console.log(colorSelected);
   };
 
   return (
