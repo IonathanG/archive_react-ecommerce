@@ -2,14 +2,23 @@ import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined, ExitToApp } from "@material-ui/icons";
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { resetStore } from "../feature/cartSlice";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user, handleLogout } = useContext(UserContext);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const [showPopup, setShowPopup] = useState(false);
+
+  const handleLogoutClick = async () => {
+    await handleLogout()
+      .then(() => navigate("/"))
+      .then(() => dispatch(resetStore()));
+  };
 
   return (
     <div className="navbar-container">
@@ -52,7 +61,7 @@ const Navbar = () => {
               </p>
               <ExitToApp
                 className="log-out"
-                onClick={() => handleLogout()}
+                onClick={() => handleLogoutClick()}
                 onMouseEnter={() => setShowPopup(true)}
                 onMouseLeave={() => setShowPopup(false)}
               ></ExitToApp>

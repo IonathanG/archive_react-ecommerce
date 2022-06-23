@@ -2,8 +2,11 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { getUserData } from "../feature/cartSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const loginEmail = useRef();
   const loginPassword = useRef();
   const [error, setError] = useState(false);
@@ -21,7 +24,10 @@ const Login = () => {
         loginEmail.current.value,
         loginPassword.current.value
       );
-      console.log(user);
+      console.log(user.user.uid);
+      // console.log("save local storage");
+      // localStorage.removeItem("state");
+      dispatch(getUserData(user.user.uid));
       navigate("/");
     } catch (error) {
       console.log(error.message);

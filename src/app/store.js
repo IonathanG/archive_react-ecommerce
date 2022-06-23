@@ -7,10 +7,10 @@ const store = configureStore({
   },
 });
 
-store.subscribe(() => {
-  const state = store.getState();
-  const serializedState = JSON.stringify(state);
-  localStorage.setItem("state", serializedState);
-});
+// store.subscribe(() => {
+//   const state = store.getState();
+//   const serializedState = JSON.stringify(state);
+//   localStorage.setItem("state", serializedState);
+// });
 
 export default store;

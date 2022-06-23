@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../utils/firebase.config";
+import { auth, db } from "../utils/firebase.config";
+import { setDoc, doc, collection } from "firebase/firestore";
 
 const Register = () => {
   const registerEmail = useRef();
@@ -11,6 +12,8 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
+
+  const colRef = collection(db, "users");
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -31,7 +34,12 @@ const Register = () => {
               displayName,
             });
             console.log(userAuth);
-            //window.location.reload();
+            await setDoc(doc(colRef, userAuth.user.uid), {
+              listItems: [],
+              totalQuantity: 0,
+              wishList: [],
+            }).catch((err) => console.log(err.message));
+
             navigate("/");
           });
       } catch (error) {
