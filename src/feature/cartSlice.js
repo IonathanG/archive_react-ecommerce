@@ -15,6 +15,7 @@ export const getUserData = createAsyncThunk(
         ? JSON.parse(localStorage.getItem("state"))
         : undefined;
 
+      localStorage.removeItem("state");
       return { dataDB: docSnap.data(), storedData };
     } else {
       console.log("No such document");
@@ -156,22 +157,48 @@ export const cartSlice = createSlice({
     [getUserData.fulfilled]: (state, { payload }) => {
       console.log("fulfilled");
       if (payload.storedData === undefined) {
-        console.log("empty localStorage");
         state.listItems = payload.dataDB.listItems;
         state.totalQuantity = payload.dataDB.totalQuantity;
         state.wishList = payload.dataDB.wishList;
       } else {
-        console.log("found localStorage");
-        state.listItems = [
-          ...payload.dataDB.listItems,
-          ...payload.storedData.listItems,
-        ];
+        // listItems
+        let newListItems = payload.dataDB.listItems;
+        for (let i = 0; i < payload.dataDB.listItems.length; i++) {
+          for (let j = 0; j < payload.storedData.listItems.length; j++) {
+            if (
+              payload.dataDB.listItems[i].id ===
+                payload.storedData.listItems[j].id &&
+              payload.dataDB.listItems[i].color ===
+                payload.storedData.listItems[j].color &&
+              payload.dataDB.listItems[i].size ===
+                payload.storedData.listItems[j].size
+            ) {
+              newListItems[i].quantity +=
+                payload.storedData.listItems[j].quantity;
+            } else {
+              newListItems.push(payload.storedData.listItems[j]);
+            }
+          }
+        }
+        state.listItems = newListItems;
+
+        // totalQuantity
         state.totalQuantity =
           payload.dataDB.totalQuantity + payload.storedData.totalQuantity;
-        state.wishList = [
-          ...payload.dataDB.wishList,
-          ...payload.storedData.wishList,
-        ];
+
+        // wishList
+        let newWishList = payload.dataDB.wishList;
+        for (let i = 0; i < payload.dataDB.wishList.length; i++) {
+          for (let j = 0; j < payload.storedData.wishList.length; j++) {
+            if (
+              payload.dataDB.wishList[i].id !==
+              payload.storedData.wishList[j].id
+            ) {
+              newWishList.push(payload.storedData.wishList[j]);
+            }
+          }
+        }
+        state.wishList = newWishList;
       }
       state.initUser = true;
     },
