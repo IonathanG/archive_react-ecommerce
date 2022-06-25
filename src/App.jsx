@@ -29,6 +29,8 @@ const App = () => {
     else dispatch(getGuestData());
   }, [user, dispatch]);
 
+  // update firestore on state change for user
+  // update local storage on state change for guest
   useEffect(() => {
     if (initUser && user) {
       const docRef = doc(db, "users", user.uid);

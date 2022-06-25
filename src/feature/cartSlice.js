@@ -179,6 +179,8 @@ export const cartSlice = createSlice({
       console.log("rejected");
       state.initUser = false;
     },
+
+    //initialise data from local storage
     [getGuestData.pending]: (state) => {
       state.initUser = false;
     },
