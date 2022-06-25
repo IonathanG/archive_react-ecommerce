@@ -9,16 +9,48 @@ import Announcement from "./components/Announcement";
 import Navbar from "./components/Navbar";
 import { useContext, useEffect } from "react";
 import UserContext from "./context/UserContext";
-import { getUserData } from "./feature/cartSlice";
-import { useDispatch } from "react-redux";
+import { getGuestData, getUserData } from "./feature/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "./utils/firebase.config";
 
 const App = () => {
   const { user } = useContext(UserContext);
   const dispatch = useDispatch();
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const listItems = useSelector((state) => state.cart.listItems);
+  const wishList = useSelector((state) => state.cart.wishList);
+  const initUser = useSelector((state) => state.cart.wishList);
 
+  // fetch initial firestore data for user
+  // fetch initial local storage data for guest
   useEffect(() => {
     if (user) dispatch(getUserData(user.uid));
+    else dispatch(getGuestData());
   }, [user, dispatch]);
+
+  useEffect(() => {
+    if (initUser && user) {
+      const docRef = doc(db, "users", user.uid);
+
+      updateDoc(docRef, {
+        listItems,
+        totalQuantity,
+        wishList,
+      }).then(() => {
+        console.log("updated");
+      });
+    } else if (initUser && !user) {
+      console.log("update local storage");
+      const serializedState = JSON.stringify({
+        listItems,
+        totalQuantity,
+        wishList,
+      });
+      localStorage.setItem("state", serializedState);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listItems, totalQuantity, wishList, initUser]);
 
   return (
     <div className="app">
