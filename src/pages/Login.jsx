@@ -22,9 +22,6 @@ const Login = () => {
         loginPassword.current.value
       );
       console.log(user.user.uid);
-      // console.log("save local storage");
-      // localStorage.removeItem("state");
-      // dispatch(getUserData(user.user.uid));
       navigate("/");
     } catch (error) {
       console.log(error.message);
