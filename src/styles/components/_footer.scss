@@ -11,9 +11,6 @@
     flex-direction: column;
     padding: 20px;
 
-    h1 {
-    }
-
     p {
       margin: 20px 0px;
     }
@@ -56,6 +53,11 @@
       li {
         width: 50%;
         margin-bottom: 10px;
+
+        a {
+          text-decoration: none;
+          color: black;
+        }
       }
     }
   }

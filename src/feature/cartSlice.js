@@ -71,7 +71,6 @@ export const cartSlice = createSlice({
           color: payload.color,
           size: payload.size,
           img: payload.img,
-          //ref: payload.ref,
         });
       }
     },

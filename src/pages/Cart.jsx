@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../components/Footer";
 import { Add, DeleteOutline, Remove } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import {
   addQuantity,
@@ -23,7 +23,9 @@ const Cart = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [freeShipping, setFreeShipping] = useState(false);
 
-  const [showWishList, setShowWishList] = useState(false);
+  const location = useLocation();
+  const wishListStatus = location.state;
+  const [showWishList, setShowWishList] = useState(wishListStatus);
 
   useEffect(() => {
     setTotalPrice(0);

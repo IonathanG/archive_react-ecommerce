@@ -8,6 +8,7 @@ import {
   Twitter,
 } from "@material-ui/icons";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -37,26 +38,50 @@ const Footer = () => {
       <div className="center">
         <h3>Useful Links</h3>
         <ul>
-          <li>Home</li>
-          <li>Cart</li>
-          <li>Man Fashion</li>
-          <li>Woman Fashion</li>
-          <li>Accessories</li>
-          <li>My Account</li>
-          <li>Order Tracking</li>
-          <li>Whislist</li>
-          <li>Whislist</li>
-          <li>Terms</li>
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart">Cart</NavLink>
+          </li>
+          <li>
+            <NavLink to="/product-list">Man Fashion</NavLink>
+          </li>
+          <li>
+            <NavLink to="/product-list">Woman Fashion</NavLink>
+          </li>
+          <li>
+            <NavLink to="/product-list">Accessories</NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart">My Account</NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart">Order Tracking</NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart" state={{ wishListStatus: true }}>
+              Wishlist
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart" state={{ wishListStatus: true }}>
+              Wishlist
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/">Terms</NavLink>
+          </li>
         </ul>
       </div>
       <div className="right">
         <h3>Contact</h3>
         <div className="contact-item">
-          <Room style={{ marginRight: "10px" }} /> 622 Dixie Path, South
-          Tobinchester 98336
+          <Room style={{ marginRight: "10px" }} /> 350 James Way, Pismo Beach
+          93449, California
         </div>
         <div className="contact-item">
-          <Phone style={{ marginRight: "10px" }} /> +1 234 56 78
+          <Phone style={{ marginRight: "10px" }} /> 805 704-3900
         </div>
         <div className="contact-item">
           <MailOutline style={{ marginRight: "10px" }} />
