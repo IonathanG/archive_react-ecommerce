@@ -8,6 +8,10 @@ It uses a fully responsive UI Design, allowing each user to create an account an
 
 Other projects can be found within the following Portolio website as well as on this GitHub Repositories.
 
+<img src="/public/screenshots/screenshot1.png" width="200" height="200">
+<img src="/public/screenshots/screenshot2.png" width="200" height="200">
+<img src="/public/screenshots/screenshot3.png" width="200" height="200">
+
 ## Project Overview
 
 An E-Commerce Shopping website created with reactJS, showcasing clothing items.
