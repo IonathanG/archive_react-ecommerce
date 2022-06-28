@@ -24,9 +24,9 @@ The app contains the following features:
 - A history of purchased items following the checkout
 - Option to add the email address to a Newsletter
 
-## Screenshots
+## Scenario of Data Flow - Screenshots
 
-<img src="/public/screenshots/shopping-cart-data.png" width="300" height="300">
+<img src="/public/screenshots/shopping-cart-data.png" width="400" height="400">
 
 ## Tech/framework used
 
