@@ -9,7 +9,7 @@ It uses a fully responsive UI Design, allowing each user to create an account an
 Other projects can be found within the following Portolio website as well as on this GitHub Repositories.
 
 <p float='left'>
-<img src="/public/screenshots/screenshot1.png" width="200" display='inline-block'>
+<img src="/public/screenshots/screenshot1.png" width="250" display='inline-block'>
 <img src="/public/screenshots/screenshot2.png" width="200" display='inline-block'>
 <img src="/public/screenshots/screenshot3.png" height="200" display='inline-block'>
 </p>
