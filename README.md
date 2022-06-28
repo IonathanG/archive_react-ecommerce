@@ -14,7 +14,7 @@ Other projects can be found within the following Portolio website as well as on 
 <img src="/public/screenshots/screenshot3.png" height="200" display='inline-block'>
 </p>
 
-## Project Overview
+## Project Overview & Features
 
 An E-Commerce Shopping website created with reactJS, showcasing clothing items.
 
@@ -45,10 +45,6 @@ The app contains the following features:
 - [Context API](https://reactjs.org/docs/context.html)
 - [Firebase & Firestore](https://firebase.google.com/)
 - [Material UI](https://mui.com/)
-
-## Features
-
-What makes your project stand out?
 
 ## Code Feature
 
