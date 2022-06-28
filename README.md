@@ -4,7 +4,7 @@ This react project is part of a series of individual apps built to showcase some
 
 The website is designed as a scalable full stack application E-Commerce Page (clothing items).
 
-It uses a fully responsive UI Design, allowing each user to create an account and to save items onto their shopping cart via their personal profile.
+It uses a fully responsive UI Design, allowing each user to create an account and to save items onto their shopping cart in Firestore via their personal profile.
 
 Other projects can be found within the following Portolio website as well as on this GitHub Repositories.
 
