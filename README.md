@@ -11,7 +11,7 @@ Other projects can be found within the following Portolio website as well as on 
 <p float='left'>
 <img src="/public/screenshots/screenshot1.png" width="200" display='inline-block'>
 <img src="/public/screenshots/screenshot2.png" width="200" display='inline-block'>
-<img src="/public/screenshots/screenshot3.png" width="150" display='inline-block'>
+<img src="/public/screenshots/screenshot3.png" height="200" display='inline-block'>
 </p>
 
 ## Project Overview
