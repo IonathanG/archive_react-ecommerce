@@ -26,6 +26,8 @@ The app contains the following features:
 
 ## Screenshots
 
+![Data Scenario](/public/screenshots/shopping-cart-data.png)
+
 ## Tech/framework used
 
 <b>Built with</b>
@@ -130,4 +132,4 @@ I would like to thank:
 
 ## Created by
 
-() => © [Ionathan]()
+() => © [Ionathan](https://github.com/IonathanG)
