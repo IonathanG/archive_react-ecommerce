@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+## React Shopping App with Redux Toolkit and Firebase
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This react project is part of a series of individual apps built to showcase some of my personal Front End Development Skills.
 
-## Available Scripts
+The website is designed as a scalable full stack application E-Commerce Page (clothing items).
 
-In the project directory, you can run:
+It uses a fully responsive UI Design, allowing each user to create an account and to save items onto their shopping cart via their personal profile.
 
-### `yarn start`
+Other projects can be found within the following Portolio website as well as on this GitHub Repositories.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Project Overview
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+An E-Commerce Shopping website created with reactJS, showcasing clothing items.
 
-### `yarn test`
+The app contains the following features:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- A clear and clean responsive UI design for a smooth navigation
+- A Register/Login option for the user to create a personalised account (Firebase and Context API)
+- A shopping cart for checkout as well as a wishlist for further purchases (Redux Toolkit)
+- The possibility for each user to retrieve their shopping cart on any device (Firestore via user.uid)
+- Loads the pre existing cart onto Redux Toolkit via asynchronous-Thunk
+- The use of local storage for non signed in user to save their shopping cart on the current device
+- Each item added while being signed out to be automatically added to the existing or newly created account once logged in
+- A history of purchased items following the checkout
+- Option to add the email address to a Newsletter
 
-### `yarn build`
+## Screenshots
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech/framework used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<b>Built with</b>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [reactJS](https://reactjs.org/)
+- [Sass](https://sass-lang.com/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Context API](https://reactjs.org/docs/context.html)
+- [Firebase & Firestore](https://firebase.google.com/)
+- [Material UI](https://mui.com/)
 
-### `yarn eject`
+## Features
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+What makes your project stand out?
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Code Feature
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Load Firestore into Redux Toolkit with AsyncThunk and extraReducers (user not logged in):
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```javascript
+export const getUserData = createAsyncThunk(
+  "data/getUserData",
+  async (userID) => {
+    const docRef = doc(db, "users", `${userID}`);
+    const docSnap = await getDoc(docRef);
 
-## Learn More
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      const storedData = window.localStorage.state
+        ? JSON.parse(localStorage.getItem("state"))
+        : undefined;
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+      localStorage.removeItem("state");
+      return { dataDB: docSnap.data(), storedData };
+    } else {
+      console.log("No such document");
+    }
+  }
+);
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```javascript
+extraReducers: {
+ [getGuestData.pending]: (state) => {
+      state.initUser = false;
+    },
+    [getGuestData.fulfilled]: (state, { payload }) => {
+      if (payload) {
+        state.listItems = payload.listItems;
+        state.totalQuantity = payload.totalQuantity;
+        state.wishList = payload.wishList;
+      }
+      state.initUser = true;
+    },
+    [getGuestData.rejected]: (state) => {
+      state.initUser = false;
+    },
+  }
+```
 
-### Code Splitting
+## Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Use the package manager npm to install the app once project is downloaded.
 
-### Analyzing the Bundle Size
+For dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+npm install
+```
 
-### Making a Progressive Web App
+## Launch the App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```javascript
+npm start
 
-### Advanced Configuration
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## How to use?
 
-### Deployment
+For an easy start, click on the following link to access the live website:
+https://react-ecommerce-ionyshop.netlify.app/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Start by browing the website items, add a few products to the shopping cart and some others to the wishList.
+- Each product of different color and size will be shown as a different item in your cart.
+- The cart will persist if the page is reloaded or closed.
+- Now register a new account or log in on an account.
+- The items added while being signed out will be added to any pre existing cart.
+- Proceed to checkout. Retrieve your purchase history.
+- Subscribe to the Newsletter by adding your email to the form
 
-### `yarn build` fails to minify
+## Contribute
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Any contributions is welcome! Please suggest any new feature, suggestion or improvement and they will be implemented.
+Thank you for the support.
+
+## Credits
+
+I would like to thank:
+
+- Lama Dev for the UI inspiration
+- The Net Ninja for the practical use of Firestore V9
+
+## Created by
+
+() => © [Ionathan]()
