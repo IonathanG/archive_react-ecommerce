@@ -8,9 +8,11 @@ It uses a fully responsive UI Design, allowing each user to create an account an
 
 Other projects can be found within the following Portolio website as well as on this GitHub Repositories.
 
+<p float='left'>
 <img src="/public/screenshots/screenshot1.png" width="200" display='inline-block'>
 <img src="/public/screenshots/screenshot2.png" width="200" display='inline-block'>
-<img src="/public/screenshots/screenshot3.png" width="200" display='inline-block'>
+<img src="/public/screenshots/screenshot3.png" width="150" display='inline-block'>
+</p>
 
 ## Project Overview
 
@@ -23,6 +25,7 @@ The app contains the following features:
 - A shopping cart for checkout as well as a wishlist for further purchases (Redux Toolkit)
 - The possibility for each user to retrieve their shopping cart on any device (Firestore via user.uid)
 - Loads the pre existing cart onto Redux Toolkit via asynchronous-Thunk
+- Create, Read, Update, Delete items in the cart (CRUD)
 - The use of local storage for non signed in user to save their shopping cart on the current device
 - Each item added while being signed out to be automatically added to the existing or newly created account once logged in
 - A history of purchased items following the checkout
