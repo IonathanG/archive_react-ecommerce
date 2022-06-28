@@ -55,7 +55,7 @@ export const popularProducts = [
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5mtR_28A1uTccBViflpf-3LcxUE0zTYfDqQ&usqp=CAU",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, porro? Animi, nobis harum dolor architecto tempore in dicta et repudiandae? Sit consequuntur in magni suscipit eveniet quam voluptatem repudiandae velit?",
     price: 30,
-    type: "t-shirt",
+    type: "shirt",
   },
   {
     id: 2,
