@@ -26,7 +26,7 @@ The app contains the following features:
 
 ## Screenshots
 
-<img src="/public/screenshots/shopping-cart-data.png" width="100" height="100">
+<img src="/public/screenshots/shopping-cart-data.png" width="300" height="300">
 
 ## Tech/framework used
 
