@@ -26,7 +26,7 @@ The app contains the following features:
 
 ## Screenshots
 
-![Data Scenario](/public/screenshots/shopping-cart-data.png)
+![Data Scenario](/public/screenshots/shopping-cart-data.png | width=100)
 
 ## Tech/framework used
 
