@@ -13,6 +13,7 @@ import { getGuestData, getUserData } from "./feature/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "./utils/firebase.config";
+import About from "./pages/About";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -55,30 +56,29 @@ const App = () => {
   }, [listItems, totalQuantity, wishList, initUser]);
 
   // scroll up to the top of the page on every Link
-  const Wrapper = ({ children }) => {
-    const location = useLocation();
-    useLayoutEffect(() => {
-      document.documentElement.scrollTo(0, 0);
-    }, [location.pathname]);
-    return children;
-  };
+  // const Wrapper = ({ children }) => {
+  //   const location = useLocation();
+  //   useLayoutEffect(() => {
+  //     document.documentElement.scrollTo(0, 0);
+  //   }, [location.pathname]);
+  //   return children;
+  // };
 
   return (
     <div className="app">
       <BrowserRouter>
-        <Wrapper>
-          <Announcement />
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/product-list" element={<ProductList />} />
-            <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-        </Wrapper>
+        <Announcement />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/product-list" element={<ProductList />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
