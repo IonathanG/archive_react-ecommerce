@@ -1,0 +1,80 @@
+.about-container {
+  //background-color: rgba(0, 255, 255, 0.325);
+  padding: 20px;
+  padding-bottom: 30px;
+  width: 90%;
+  margin: 0 auto;
+
+  @media only screen and (max-width: $phone) {
+    padding: 10px;
+  }
+
+  section {
+    line-height: 30px;
+    letter-spacing: 0.3px;
+    h2 {
+      font-size: 26px;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .about {
+    .img-container {
+      margin: 20px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      gap: 20px;
+
+      img {
+        transition: 0.3s ease;
+        max-width: 300px;
+        max-height: 280px;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  .features {
+    span {
+      font-weight: 700;
+    }
+  }
+
+  .data-flow {
+    img {
+      margin: 20px 0;
+      max-width: 500px;
+      transition: 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .how-to-use {
+    a {
+      color: black;
+      font-weight: 700;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .created-by {
+    margin: 20px 0;
+    font-size: 18px;
+    span {
+      font-weight: 700;
+    }
+  }
+}
