@@ -20,28 +20,86 @@
       display: flex;
       align-items: center;
 
-      span {
-        font-size: 14px;
+      .hamburger-container {
+        display: none;
         cursor: pointer;
+        z-index: 20;
+        margin-left: 15px;
+        transition: 0.25s ease-in;
 
-        @media only screen and (max-width: $phone) {
-          display: none;
+        @media (max-width: $phone) {
+          display: block;
         }
       }
 
-      .search-container {
-        border: 0.5px solid lightgrey;
+      .hamburger-rest {
+        width: 16px;
+        height: 15px;
+        background-image: url(../../../public/images/icon-menu.svg);
+      }
+
+      .hamburger-active {
+        width: 14px;
+        height: 15px;
+        background-image: url(../../../public/images/icon-close.svg);
+      }
+
+      .menu-list {
         display: flex;
-        align-items: center;
-        margin-left: 25px;
-        padding: 5px;
+        flex-direction: row;
+        gap: 20px;
+        margin: 0;
+        padding: 0;
+        transition: 0.3 ease;
 
-        input {
-          border: none;
+        @media only screen and (max-width: $phone) {
+          background-color: white;
+          position: fixed;
+          top: 0;
+          left: -100%;
+          height: 100vh;
+          width: 40vw;
+          max-width: 300px;
+          transition: 0.5s ease-in-out;
+          z-index: 10;
+          flex-direction: column;
+          gap: 30px;
+          padding-top: 120px;
+          padding-left: 25px;
+        }
 
-          @media only screen and (max-width: $phone) {
-            width: 50px;
+        li {
+          list-style: none;
+          position: relative;
+
+          .menu-list-item {
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: black;
+            font-size: 15px;
+
+            &::after {
+              @include underline-hover;
+              @media (max-width: $phone) {
+                display: none;
+              }
+            }
+            &:hover::after {
+              width: 100%;
+              left: 0;
+            }
           }
+
+          .nav-active {
+            @include nav-active;
+          }
+        }
+      }
+
+      .show-menu {
+        @media only screen and (max-width: $phone) {
+          left: 0;
         }
       }
     }
@@ -71,8 +129,9 @@
       justify-content: flex-end;
 
       @media only screen and (max-width: $phone) {
-        justify-content: center;
-        flex: 2;
+        justify-content: flex-end;
+        // flex: 2;
+        margin-right: 15px;
       }
 
       .menu-item {
@@ -81,11 +140,35 @@
         margin-left: 25px;
         text-decoration: none;
         color: black;
+        position: relative;
 
         @media only screen and (max-width: $phone) {
-          font-size: 12px;
           margin-left: 10px;
         }
+
+        &::after {
+          @include underline-hover;
+          @media (max-width: $phone) {
+            display: none;
+          }
+        }
+        &:hover::after {
+          width: 100%;
+          left: 0;
+        }
+      }
+
+      .menu-item-cart {
+        margin-left: 50px;
+        color: black;
+
+        @media only screen and (max-width: $phone) {
+          margin-left: 15px;
+        }
+      }
+
+      .nav-active {
+        @include nav-active;
       }
 
       .logged-in {
@@ -97,6 +180,7 @@
 
         @media only screen and (max-width: $phone) {
           gap: 8px;
+          font-size: 12px;
         }
 
         p {
@@ -135,5 +219,18 @@
         }
       }
     }
+  }
+}
+
+//darken the body when menu is open on small screens
+.layer-dim {
+  @media (max-width: $phone) {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    left: 0;
+    top: 0;
+    z-index: 5;
   }
 }

@@ -129,13 +129,11 @@ const About = () => {
         </section>
         <section className="credits">
           <h2>Credits</h2>
-          <p>
-            I would like to thank:
-            <ul>
-              <li>Lama Dev for the UI inspiration The Net Ninja for</li>
-              <li>the practical use of Firestore V9</li>
-            </ul>
-          </p>
+          <p>I would like to thank:</p>
+          <ul>
+            <li>Lama Dev for the UI inspiration</li>
+            <li>The Net Ninja for the practical use of Firestore V9</li>
+          </ul>
         </section>
         <section className="created-by">
           Created by <span>Ionathan</span>

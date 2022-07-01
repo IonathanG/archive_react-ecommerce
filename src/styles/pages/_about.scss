@@ -4,6 +4,7 @@
   padding-bottom: 30px;
   width: 90%;
   margin: 0 auto;
+  overflow: hidden;
 
   @media only screen and (max-width: $phone) {
     padding: 10px;
@@ -52,6 +53,10 @@
       margin: 20px 0;
       max-width: 500px;
       transition: 0.3s ease;
+
+      @media only screen and (max-width: $phone) {
+        max-width: 350px;
+      }
 
       &:hover {
         transform: scale(1.1);
