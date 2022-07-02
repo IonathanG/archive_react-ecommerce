@@ -156,30 +156,39 @@ export const cartSlice = createSlice({
     [getUserData.fulfilled]: (state, { payload }) => {
       console.log("fulfilled");
       if (payload.storedData === undefined) {
+        console.log("local storage undefined");
         state.listItems = payload.dataDB.listItems;
         state.totalQuantity = payload.dataDB.totalQuantity;
         state.wishList = payload.dataDB.wishList;
       } else {
+        console.log("local storage exist");
+
         // listItems
         if (payload.dataDB.listItems.length > 0) {
-          let newListItems = payload.dataDB.listItems;
-          for (let i = 0; i < payload.dataDB.listItems.length; i++) {
-            for (let j = 0; j < payload.storedData.listItems.length; j++) {
-              if (
-                payload.dataDB.listItems[i].id ===
-                  payload.storedData.listItems[j].id &&
-                payload.dataDB.listItems[i].color ===
-                  payload.storedData.listItems[j].color &&
-                payload.dataDB.listItems[i].size ===
-                  payload.storedData.listItems[j].size
-              ) {
-                newListItems[i].quantity +=
-                  payload.storedData.listItems[j].quantity;
-              } else {
-                newListItems.push(payload.storedData.listItems[j]);
-              }
-            }
-          }
+          console.log("break listItems");
+          let newListItems = [
+            ...payload.dataDB.listItems,
+            ...payload.storedData.listItems,
+          ];
+
+          // let newListItems = payload.dataDB.listItems;
+          // for (let i = 0; i < payload.dataDB.listItems.length; i++) {
+          //   for (let j = 0; j < payload.storedData.listItems.length; j++) {
+          //     if (
+          //       payload.dataDB.listItems[i].id ===
+          //         payload.storedData.listItems[j].id &&
+          //       payload.dataDB.listItems[i].color ===
+          //         payload.storedData.listItems[j].color &&
+          //       payload.dataDB.listItems[i].size ===
+          //         payload.storedData.listItems[j].size
+          //     ) {
+          //       newListItems[i].quantity +=
+          //         payload.storedData.listItems[j].quantity;
+          //     } else {
+          //       newListItems.push(payload.storedData.listItems[j]);
+          //     }
+          //   }
+          // }
           state.listItems = newListItems;
         } else {
           state.listItems = payload.storedData.listItems;
@@ -190,18 +199,17 @@ export const cartSlice = createSlice({
 
         // wishList
         if (payload.dataDB.wishList.length > 0) {
-          let newWishList = payload.dataDB.wishList;
-          for (let i = 0; i < payload.dataDB.wishList.length; i++) {
-            for (let j = 0; j < payload.storedData.wishList.length; j++) {
-              if (
-                payload.dataDB.wishList[i].id !==
-                payload.storedData.wishList[j].id
-              ) {
-                newWishList.push(payload.storedData.wishList[j]);
-              }
-            }
-          }
-          state.wishList = newWishList;
+          console.log("break wishlist");
+          // only keeping items with different id => avoid duplicate in wishList
+          let id_wishList = new Set(
+            payload.dataDB.wishList.map((item) => item.id)
+          );
+          state.wishList = [
+            ...payload.dataDB.wishList,
+            ...payload.storedData.wishList.filter(
+              (item) => !id_wishList.has(item.id)
+            ),
+          ];
         } else {
           state.wishList = payload.storedData.wishList;
         }
