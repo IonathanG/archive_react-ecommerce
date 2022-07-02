@@ -99,7 +99,6 @@
           display: flex;
           justify-content: space-between;
           position: relative;
-          //background-color: aqua;
 
           @media only screen and (max-width: $phone) {
             flex-direction: column;
@@ -135,20 +134,11 @@
               flex-direction: column;
               justify-content: space-around;
 
-              //   .product-name {
-              //   }
-
-              //   .product-id {
-              //   }
-
               .product-color {
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
               }
-
-              //   .product-size {
-              //   }
             }
           }
 
@@ -228,12 +218,6 @@
           margin: 30px 0px;
           display: flex;
           justify-content: space-between;
-
-          //   .summary-item-text {
-          //   }
-
-          //   .summary-item-price {
-          //   }
         }
 
         .total {
@@ -295,10 +279,8 @@
         justify-content: space-evenly;
         flex-wrap: wrap;
         gap: 40px;
-        //background-color: aquamarine;
 
         .product {
-          //background-color: beige;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
