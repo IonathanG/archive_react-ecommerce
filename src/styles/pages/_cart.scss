@@ -16,6 +16,11 @@
       align-items: center;
       justify-content: space-between;
       padding: 20px;
+      position: relative;
+
+      @media only screen and (max-width: $phone) {
+        margin-bottom: 80px;
+      }
 
       .topButton {
         padding: 10px;
@@ -23,7 +28,7 @@
         cursor: pointer;
 
         @media only screen and (max-width: $phone) {
-          max-width: 100px;
+          max-width: 120px;
         }
       }
 
@@ -38,23 +43,39 @@
       }
 
       .topTexts {
+        transition: 0.3s ease;
         @media only screen and (max-width: $phone) {
           display: flex;
           flex-direction: column;
           gap: 10px;
           text-align: center;
           font-size: 15px;
+          margin-top: 15px;
 
-          @media only screen and (max-width: 410px) {
-            font-size: 12px;
+          @media only screen and (max-width: $phone) {
+            position: absolute;
+            flex-direction: row;
+            left: 0;
+            right: 0;
+            top: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            width: 280px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
           }
         }
 
         span {
-          text-decoration: underline;
+          position: relative;
           cursor: pointer;
           margin: 0 10px;
         }
+      }
+
+      .topText-active {
+        @include nav-active;
       }
     }
 

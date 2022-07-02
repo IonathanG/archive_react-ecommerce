@@ -144,13 +144,11 @@
 
         @media only screen and (max-width: $phone) {
           margin-left: 10px;
+          font-size: 11px;
         }
 
         &::after {
           @include underline-hover;
-          @media (max-width: $phone) {
-            display: none;
-          }
         }
         &:hover::after {
           width: 100%;
@@ -163,7 +161,8 @@
         color: black;
 
         @media only screen and (max-width: $phone) {
-          margin-left: 15px;
+          margin-left: 5px;
+          transform: scale(0.8);
         }
       }
 
@@ -179,7 +178,7 @@
         position: relative;
 
         @media only screen and (max-width: $phone) {
-          gap: 8px;
+          gap: 2px;
           font-size: 12px;
         }
 
@@ -199,6 +198,10 @@
             transform: scale(0.94);
             opacity: 0.85;
           }
+
+          @media only screen and (max-width: $phone) {
+            transform: scale(0.65);
+          }
         }
 
         .log-out-popup {
@@ -206,6 +209,7 @@
           position: absolute;
           border: 1px solid black;
           border-radius: 2px;
+          background-color: white;
           top: 30px;
           right: -20px;
           font-size: 12px;

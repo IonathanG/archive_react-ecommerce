@@ -53,10 +53,16 @@ const Cart = () => {
             <button className="topButton transparent">CONTINUE SHOPPING</button>
           </Link>
           <div className="topTexts">
-            <span className="topText" onClick={() => setShowWishList(false)}>
+            <span
+              className={`topText ${!showWishList ? "topText-active" : ""}`}
+              onClick={() => setShowWishList(false)}
+            >
               Shopping Bag ({totalQuantity})
             </span>
-            <span className="topText" onClick={() => setShowWishList(true)}>
+            <span
+              className={`topText ${showWishList ? "topText-active" : ""}`}
+              onClick={() => setShowWishList(true)}
+            >
               Your Wishlist ({wishList.length})
             </span>
           </div>
