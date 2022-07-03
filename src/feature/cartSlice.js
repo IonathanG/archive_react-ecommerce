@@ -150,45 +150,35 @@ export const cartSlice = createSlice({
   // initialise async data from firestore
   extraReducers: {
     [getUserData.pending]: (state) => {
-      console.log("pending");
       state.initUser = false;
     },
     [getUserData.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled");
       if (payload.storedData === undefined) {
-        console.log("local storage undefined");
         state.listItems = payload.dataDB.listItems;
         state.totalQuantity = payload.dataDB.totalQuantity;
         state.wishList = payload.dataDB.wishList;
       } else {
-        console.log("local storage exist");
-
         // listItems
+        // merge both listItems
+        // remove duplicates and add quantities of item with similar id, color and size
         if (payload.dataDB.listItems.length > 0) {
-          console.log("break listItems");
-          let newListItems = [
+          const newListItems = [
             ...payload.dataDB.listItems,
             ...payload.storedData.listItems,
           ];
 
-          // let newListItems = payload.dataDB.listItems;
-          // for (let i = 0; i < payload.dataDB.listItems.length; i++) {
-          //   for (let j = 0; j < payload.storedData.listItems.length; j++) {
-          //     if (
-          //       payload.dataDB.listItems[i].id ===
-          //         payload.storedData.listItems[j].id &&
-          //       payload.dataDB.listItems[i].color ===
-          //         payload.storedData.listItems[j].color &&
-          //       payload.dataDB.listItems[i].size ===
-          //         payload.storedData.listItems[j].size
-          //     ) {
-          //       newListItems[i].quantity +=
-          //         payload.storedData.listItems[j].quantity;
-          //     } else {
-          //       newListItems.push(payload.storedData.listItems[j]);
-          //     }
-          //   }
-          // }
+          for (let i = 0; i < newListItems.length; i++) {
+            for (let j = i + 1; j < newListItems.length; j++) {
+              if (
+                newListItems[i].id === newListItems[j].id &&
+                newListItems[i].color === newListItems[j].color &&
+                newListItems[i].size === newListItems[j].size
+              ) {
+                newListItems[i].quantity += newListItems[j].quantity;
+                newListItems.splice(j--, 1);
+              }
+            }
+          }
           state.listItems = newListItems;
         } else {
           state.listItems = payload.storedData.listItems;
@@ -199,7 +189,6 @@ export const cartSlice = createSlice({
 
         // wishList
         if (payload.dataDB.wishList.length > 0) {
-          console.log("break wishlist");
           // only keeping items with different id => avoid duplicate in wishList
           let id_wishList = new Set(
             payload.dataDB.wishList.map((item) => item.id)
@@ -217,7 +206,6 @@ export const cartSlice = createSlice({
       state.initUser = true;
     },
     [getUserData.rejected]: (state) => {
-      console.log("rejected");
       state.initUser = false;
     },
 
@@ -249,15 +237,3 @@ export const {
   resetStore,
 } = cartSlice.actions;
 export default cartSlice.reducer;
-
-// check for local storage cart items
-// const storedData = window.localStorage.state
-//   ? JSON.parse(localStorage.getItem("state"))
-//   : undefined;
-
-// const initialState = {
-//   listItems: storedData === undefined ? [] : storedData.cart.listItems,
-//   totalQuantity: storedData === undefined ? 0 : storedData.cart.totalQuantity,
-//   wishList: storedData === undefined ? [] : storedData.cart.wishList,
-//   isLoading: false,
-// };
