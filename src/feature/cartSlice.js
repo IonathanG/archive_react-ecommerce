@@ -51,11 +51,7 @@ export const cartSlice = createSlice({
 
       if (state.listItems.length > 0) {
         for (let i = 0; i < state.listItems.length; i++) {
-          if (
-            state.listItems[i].id === payload.id &&
-            state.listItems[i].size === payload.size &&
-            state.listItems[i].color === payload.color
-          ) {
+          if (state.listItems[i].modelID === payload.modelID) {
             state.listItems[i].quantity += payload.quantity;
             itemFound = true;
           }
@@ -71,6 +67,7 @@ export const cartSlice = createSlice({
           color: payload.color,
           size: payload.size,
           img: payload.img,
+          modelID: payload.modelID,
         });
       }
     },
@@ -90,11 +87,7 @@ export const cartSlice = createSlice({
     //adding quantity to an item from the cart
     addQuantity: (state, { payload }) => {
       for (let i = 0; i < state.listItems.length; i++) {
-        if (
-          state.listItems[i].id === payload.id &&
-          state.listItems[i].color === payload.color &&
-          state.listItems[i].size === payload.size
-        ) {
+        if (state.listItems[i].modelID === payload.modelID) {
           state.listItems[i].quantity += 1;
           state.totalQuantity += 1;
         }
@@ -104,11 +97,7 @@ export const cartSlice = createSlice({
     //removing quantity to an item from the cart
     removeQuantity: (state, { payload }) => {
       for (let i = 0; i < state.listItems.length; i++) {
-        if (
-          state.listItems[i].id === payload.id &&
-          state.listItems[i].color === payload.color &&
-          state.listItems[i].size === payload.size
-        ) {
+        if (state.listItems[i].modelID === payload.modelID) {
           if (state.listItems[i].quantity > 1) state.listItems[i].quantity -= 1;
           state.totalQuantity -= 1;
         }
@@ -122,7 +111,7 @@ export const cartSlice = createSlice({
     },
 
     //add to wishList
-    handleWishList: (state, { payload }) => {
+    addRemoveWishlist: (state, { payload }) => {
       let itemFound = false;
       let newArray = [];
 
@@ -169,11 +158,7 @@ export const cartSlice = createSlice({
 
           for (let i = 0; i < newListItems.length; i++) {
             for (let j = i + 1; j < newListItems.length; j++) {
-              if (
-                newListItems[i].id === newListItems[j].id &&
-                newListItems[i].color === newListItems[j].color &&
-                newListItems[i].size === newListItems[j].size
-              ) {
+              if (newListItems[i].modelID === newListItems[j].modelID) {
                 newListItems[i].quantity += newListItems[j].quantity;
                 newListItems.splice(j--, 1);
               }
@@ -233,7 +218,7 @@ export const {
   addQuantity,
   removeQuantity,
   deleteCart,
-  handleWishList,
+  addRemoveWishlist,
   resetStore,
 } = cartSlice.actions;
 export default cartSlice.reducer;

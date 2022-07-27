@@ -129,7 +129,7 @@ const ProductPage = () => {
                     color: colorSelected,
                     size: sizeSelected,
                     id,
-                    //ref,
+                    modelID: `${id + "-" + sizeSelected + "-" + colorSelected}`,
                   })
                 )
               }

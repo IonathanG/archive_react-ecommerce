@@ -6,7 +6,7 @@ import {
   removeQuantity,
   removeItem,
   deleteCart,
-  handleWishList,
+  addRemoveWishlist,
 } from "../feature/cartSlice";
 
 import { Add, DeleteOutline, Remove } from "@material-ui/icons";
@@ -108,7 +108,7 @@ const Cart = () => {
                         <b>Product:</b> {item.name}
                       </span>
                       <span className="product-id">
-                        <b>REF:</b> 123456789
+                        <b>REF:</b> {item.modelID}
                       </span>
                       <div
                         className="product-color"
@@ -208,7 +208,7 @@ const Cart = () => {
                       </Link>
                       <button
                         className="remove-button"
-                        onClick={() => dispatch(handleWishList(item))}
+                        onClick={() => dispatch(addRemoveWishlist(item))}
                       >
                         Remove from wishlist
                       </button>
