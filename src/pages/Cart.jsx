@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../components/Footer";
 import { Add, DeleteOutline, Remove } from "@material-ui/icons";
@@ -20,28 +20,38 @@ const Cart = () => {
   const listItems = useSelector((state) => state.cart.listItems);
   const wishList = useSelector((state) => state.cart.wishList);
 
-  const [totalPrice, setTotalPrice] = useState(0);
   const [freeShipping, setFreeShipping] = useState(false);
 
   const location = useLocation();
   const wishListStatus = location.state;
   const [showWishList, setShowWishList] = useState(wishListStatus);
 
-  useEffect(() => {
-    setTotalPrice(0);
+  // -- set total price of items in the cart --
+  const computeTotalPrice = () => {
+    let sum_Price = 0;
 
-    listItems.map((item) =>
-      setTotalPrice((prevState) => prevState + item.price * item.quantity)
-    );
+    listItems.map((item) => (sum_Price += item.price * item.quantity));
 
-    totalPrice >= 50 ? setFreeShipping(true) : setFreeShipping(false);
-  }, [listItems, totalPrice]);
+    sum_Price >= 50 ? setFreeShipping(true) : setFreeShipping(false);
 
-  const handleQuantity = (option, item) => {
-    if (option === "remove") {
-      if (item.quantity > 1) dispatch(removeQuantity(item));
-    } else if (option === "add")
-      if (item.quantity < 9) dispatch(addQuantity(item));
+    return sum_Price;
+  };
+
+  const totalPrice = useMemo(
+    () => computeTotalPrice(listItems),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [listItems]
+  );
+  // -----------
+
+  // add quantity of a specific item
+  const onAddItemQuantity = (item) => {
+    if (item.quantity < 9) dispatch(addQuantity(item));
+  };
+
+  // remove quantity of a specific item
+  const onRemoveItemQuantity = (item) => {
+    if (item.quantity > 1) dispatch(removeQuantity(item));
   };
 
   return (
@@ -101,11 +111,11 @@ const Cart = () => {
                   </div>
                   <div className="price-detail">
                     <div className="product-amount-container">
-                      <span onClick={() => handleQuantity("remove", item)}>
+                      <span onClick={() => onRemoveItemQuantity(item)}>
                         <Remove />
                       </span>
                       <div className="product-amount">{item.quantity}</div>
-                      <span onClick={() => handleQuantity("add", item)}>
+                      <span onClick={() => onAddItemQuantity(item)}>
                         <Add />
                       </span>
                     </div>
