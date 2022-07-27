@@ -22,8 +22,8 @@ const Register = () => {
 
     //checking for password match
     if (registerPassword.current.value === confirmPassword.current.value) {
-      setLoading(true);
       try {
+        setLoading(true);
         auth
           .createUserWithEmailAndPassword(
             registerEmail.current.value,
@@ -45,6 +45,7 @@ const Register = () => {
       } catch (error) {
         console.log(error.message);
         setError(true);
+      } finally {
         setLoading(false);
       }
     } else {

@@ -18,7 +18,6 @@ import Login from "./pages/Login";
 import { useUser } from "./context/UserContext";
 
 const App = () => {
-  //const { user } = useContext(UserContext);
   const user = useUser();
 
   const dispatch = useDispatch();

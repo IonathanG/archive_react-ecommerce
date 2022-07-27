@@ -13,9 +13,9 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(false);
-    setLoading(true);
 
     try {
+      setLoading(true);
       const user = await signInWithEmailAndPassword(
         auth,
         loginEmail.current.value,
@@ -26,6 +26,7 @@ const Login = () => {
     } catch (error) {
       console.log(error.message);
       setError(true);
+    } finally {
       setLoading(false);
     }
   };
