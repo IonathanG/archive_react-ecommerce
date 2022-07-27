@@ -34,7 +34,11 @@ const Cart = () => {
 
     listItems.map((item) => (sum_Price += item.price * item.quantity));
 
-    sum_Price >= 50 ? setFreeShipping(true) : setFreeShipping(false);
+    if (sum_Price >= 50) {
+      setFreeShipping(true);
+    } else {
+      setFreeShipping(false);
+    }
 
     return sum_Price;
   };
@@ -48,12 +52,16 @@ const Cart = () => {
 
   // add quantity of a specific item
   const onAddItemQuantity = (item) => {
-    if (item.quantity < 9) dispatch(addQuantity(item));
+    if (item.quantity < 9) {
+      dispatch(addQuantity(item));
+    }
   };
 
   // remove quantity of a specific item
   const onRemoveItemQuantity = (item) => {
-    if (item.quantity > 1) dispatch(removeQuantity(item));
+    if (item.quantity > 1) {
+      dispatch(removeQuantity(item));
+    }
   };
 
   return (

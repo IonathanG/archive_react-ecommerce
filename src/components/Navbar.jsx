@@ -25,7 +25,7 @@ const Navbar = () => {
 
   // open/close side menu when hamburger is clicked
   const handleToggle = () => {
-    setIsActive((prevState) => !prevState);
+    setIsActive(!isActive);
   };
 
   // handle logout and redirect
@@ -38,9 +38,11 @@ const Navbar = () => {
 
   //disable scrolling on the body when menu is open
   useEffect(() => {
-    isActive
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "visible");
+    if (isActive) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
   }, [isActive]);
 
   //close menu if click outside
@@ -49,9 +51,10 @@ const Navbar = () => {
       if (
         !btnRef.current.contains(e.target) &&
         !menuRef.current.contains(e.target)
-      )
+      ) {
         setIsActive(false);
-      // if (linkRef.current.contains(e.target)) console.log("link");
+        // if (linkRef.current.contains(e.target)) console.log("link");
+      }
     };
     document.body.addEventListener("click", closeMenu);
     return () => document.body.removeEventListener("click", closeMenu);

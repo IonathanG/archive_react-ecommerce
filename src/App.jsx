@@ -29,8 +29,11 @@ const App = () => {
   // fetch initial firestore data for user
   // fetch initial local storage data for guest
   useEffect(() => {
-    if (user.user) dispatch(getUserData(user.user.uid));
-    else dispatch(getGuestData());
+    if (user.user) {
+      dispatch(getUserData(user.user.uid));
+    } else {
+      dispatch(getGuestData());
+    }
   }, [user.user, dispatch]);
 
   // update firestore on state change for user

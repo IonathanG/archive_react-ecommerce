@@ -30,11 +30,18 @@ const ProductPage = () => {
   const [colorSelected, setColorSelected] = useState("black");
   const [itemQuantity, setItemQuantity] = useState(1);
 
-  const handleQuantity = (option) => {
-    if (option === "remove") {
-      if (itemQuantity > 1) setItemQuantity((prevState) => prevState - 1);
-    } else if (option === "add")
-      if (itemQuantity < 9) setItemQuantity((prevState) => prevState + 1);
+  // add quantity on the item
+  const onAddItemQuantity = () => {
+    if (itemQuantity < 9) {
+      setItemQuantity((prevState) => prevState + 1);
+    }
+  };
+
+  // remove quantity on the item
+  const onRemoveItemQuantity = () => {
+    if (itemQuantity > 1) {
+      setItemQuantity((prevState) => prevState - 1);
+    }
   };
 
   const handleSize = (e) => {
@@ -102,12 +109,12 @@ const ProductPage = () => {
             <div className="amount-container">
               <span
                 className="setAmount"
-                onClick={() => handleQuantity("remove")}
+                onClick={() => onRemoveItemQuantity()}
               >
                 <Remove />
               </span>
               <span className="amount">{itemQuantity}</span>
-              <span className="setAmount" onClick={() => handleQuantity("add")}>
+              <span className="setAmount" onClick={() => onAddItemQuantity()}>
                 <Add />
               </span>
             </div>

@@ -11,11 +11,15 @@ const Slider = () => {
   //useEffect cancels warning for update State on unmounted component
   useEffect(() => {
     const sliderAnim = setTimeout(function () {
-      if (!isSliderClicked) setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+      if (!isSliderClicked) {
+        setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+      }
     }, 2500);
 
     return () => {
-      if (sliderAnim) clearTimeout(sliderAnim);
+      if (sliderAnim) {
+        clearTimeout(sliderAnim);
+      }
     };
   });
 
