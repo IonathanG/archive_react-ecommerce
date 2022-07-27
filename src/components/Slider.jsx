@@ -10,32 +10,30 @@ const Slider = () => {
   //animates the slider until click
   //useEffect cancels warning for update State on unmounted component
   useEffect(() => {
-    const sliderAnim = setTimeout(function () {
+    const interval = setInterval(function () {
       if (!isSliderClicked) {
-        setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+        setSlideIndex((index) => (index + 1) % 3);
       }
     }, 2500);
 
-    return () => {
-      if (sliderAnim) {
-        clearTimeout(sliderAnim);
-      }
-    };
-  });
+    return () => clearInterval(interval);
+  }, [isSliderClicked]);
 
-  const handleClick = (direction) => {
+  // left click on the slider arrow
+  const onLeftClick = () => {
     setIsSliderClicked(true);
+    setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+  };
 
-    if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
-    } else {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
-    }
+  // right click on the slider arrow
+  const onRightClick = () => {
+    setIsSliderClicked(true);
+    setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
   };
 
   return (
     <div className="slider-container">
-      <div className="arrow left" onClick={() => handleClick("left")}>
+      <div className="arrow left" onClick={() => onLeftClick()}>
         <ArrowLeftOutlined />
       </div>
       <div className={`wrapper slide-${slideIndex + 1}`}>
@@ -54,7 +52,7 @@ const Slider = () => {
           </div>
         ))}
       </div>
-      <div className="arrow right" onClick={() => handleClick("right")}>
+      <div className="arrow right" onClick={() => onRightClick()}>
         <ArrowRightOutlined />
       </div>
     </div>

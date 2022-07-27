@@ -26,7 +26,6 @@ const Login = () => {
     } catch (error) {
       console.log(error.message);
       setError(true);
-    } finally {
       setLoading(false);
     }
   };
