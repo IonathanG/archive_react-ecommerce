@@ -1,15 +1,19 @@
-import { Badge } from "@material-ui/core";
-import { ShoppingCartOutlined, ExitToApp } from "@material-ui/icons";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import UserContext from "../context/UserContext";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetStore } from "../feature/cartSlice";
 
+import { ShoppingCartOutlined, ExitToApp } from "@material-ui/icons";
+import { Badge } from "@material-ui/core";
+
+import { useUser } from "../context/UserContext";
+
 const Navbar = () => {
+  const user = useUser();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, handleLogout } = useContext(UserContext);
+
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const [showPopup, setShowPopup] = useState(false);
@@ -26,7 +30,8 @@ const Navbar = () => {
 
   // handle logout and redirect
   const handleLogoutClick = async () => {
-    await handleLogout()
+    await user
+      .handleLogout()
       .then(() => navigate("/"))
       .then(() => dispatch(resetStore()));
   };
@@ -125,7 +130,7 @@ const Navbar = () => {
             </div>
           </NavLink>
           <div className="right">
-            {!user && (
+            {!user.user && (
               <NavLink
                 to="/register"
                 className={(nav) =>
@@ -136,7 +141,7 @@ const Navbar = () => {
                 <div>REGISTER</div>
               </NavLink>
             )}
-            {!user && (
+            {!user.user && (
               <NavLink
                 to="/login"
                 className={(nav) =>
@@ -147,10 +152,10 @@ const Navbar = () => {
                 <div>SIGN IN</div>
               </NavLink>
             )}
-            {user && (
+            {user.user && (
               <div className="logged-in">
                 <p>
-                  Welcome, <span>{user.displayName}</span>
+                  Welcome, <span>{user.user.displayName}</span>
                 </p>
                 <ExitToApp
                   className="log-out"

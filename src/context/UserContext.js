@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase.config";
 
@@ -20,4 +20,4 @@ export function UserProvider({ children }) {
   );
 }
 
-export default UserContext;
+export const useUser = () => useContext(UserContext);

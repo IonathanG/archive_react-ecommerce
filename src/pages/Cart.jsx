@@ -1,9 +1,6 @@
-import React, { useContext, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Footer from "../components/Footer";
-import { Add, DeleteOutline, Remove } from "@material-ui/icons";
+import React, { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import UserContext from "../context/UserContext";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addQuantity,
   removeQuantity,
@@ -12,8 +9,13 @@ import {
   handleWishList,
 } from "../feature/cartSlice";
 
+import { Add, DeleteOutline, Remove } from "@material-ui/icons";
+
+import Footer from "../components/Footer";
+import { useUser } from "../context/UserContext";
+
 const Cart = () => {
-  const { user } = useContext(UserContext);
+  const user = useUser();
 
   const dispatch = useDispatch();
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
@@ -156,12 +158,12 @@ const Cart = () => {
                     $ {freeShipping ? totalPrice - 5.9 : totalPrice}
                   </span>
                 </div>
-                {user && (
+                {user.user && (
                   <button onClick={() => dispatch(deleteCart())}>
                     CHECKOUT NOW
                   </button>
                 )}
-                {!user && (
+                {!user.user && (
                   <div className="summary-no-User">
                     {" "}
                     PLEASE{" "}
