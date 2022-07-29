@@ -5,7 +5,7 @@ import {
 } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRemoveWishlist } from "../feature/cartSlice";
+import { toggleWishlistItem } from "../feature/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 const Product = ({ item }) => {
@@ -27,7 +27,7 @@ const Product = ({ item }) => {
     e.stopPropagation();
     setAnimFavorite((prevState) => !prevState);
     dispatch(
-      addRemoveWishlist({
+      toggleWishlistItem({
         name: item.name,
         price: item.price,
         img: item.img,

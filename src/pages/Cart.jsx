@@ -6,7 +6,7 @@ import {
   removeQuantity,
   removeItem,
   deleteCart,
-  addRemoveWishlist,
+  toggleWishlistItem,
 } from "../feature/cartSlice";
 
 import { Add, DeleteOutline, Remove } from "@material-ui/icons";
@@ -29,10 +29,10 @@ const Cart = () => {
   const [showWishList, setShowWishList] = useState(wishListStatus);
 
   // -- set total price of items in the cart --
-  const computeTotalPrice = () => {
+  const totalPrice = useMemo(() => {
     let sum_Price = 0;
 
-    listItems.map((item) => (sum_Price += item.price * item.quantity));
+    listItems.forEach((item) => (sum_Price += item.price * item.quantity));
 
     if (sum_Price >= 50) {
       setFreeShipping(true);
@@ -41,13 +41,7 @@ const Cart = () => {
     }
 
     return sum_Price;
-  };
-
-  const totalPrice = useMemo(
-    () => computeTotalPrice(listItems),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [listItems]
-  );
+  }, [listItems]);
   // -----------
 
   // add quantity of a specific item
@@ -208,7 +202,7 @@ const Cart = () => {
                       </Link>
                       <button
                         className="remove-button"
-                        onClick={() => dispatch(addRemoveWishlist(item))}
+                        onClick={() => dispatch(toggleWishlistItem(item))}
                       >
                         Remove from wishlist
                       </button>

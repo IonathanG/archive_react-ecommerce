@@ -10,13 +10,13 @@ const Slider = () => {
   //animates the slider until click
   //useEffect cancels warning for update State on unmounted component
   useEffect(() => {
-    const interval = setInterval(function () {
-      if (!isSliderClicked) {
+    if (!isSliderClicked) {
+      const interval = setInterval(function () {
         setSlideIndex((index) => (index + 1) % 3);
-      }
-    }, 2500);
+      }, 2500);
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [isSliderClicked]);
 
   // left click on the slider arrow

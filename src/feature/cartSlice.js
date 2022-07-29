@@ -10,7 +10,7 @@ export const getUserData = createAsyncThunk(
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      //console.log("Document data:", docSnap.data());
       const storedData = window.localStorage.state
         ? JSON.parse(localStorage.getItem("state"))
         : undefined;
@@ -18,14 +18,14 @@ export const getUserData = createAsyncThunk(
       localStorage.removeItem("state");
       return { dataDB: docSnap.data(), storedData };
     } else {
-      console.log("No such document");
+      //console.log("No such document");
     }
   }
 );
 
 // initialise data from local storage
 export const getGuestData = createAsyncThunk("data/getGuestData", () => {
-  console.log("guest data");
+  //console.log("guest data");
   const storedData = window.localStorage.state
     ? JSON.parse(localStorage.getItem("state"))
     : undefined;
@@ -98,8 +98,10 @@ export const cartSlice = createSlice({
     removeQuantity: (state, { payload }) => {
       for (let i = 0; i < state.listItems.length; i++) {
         if (state.listItems[i].modelID === payload.modelID) {
-          if (state.listItems[i].quantity > 1) state.listItems[i].quantity -= 1;
-          state.totalQuantity -= 1;
+          if (state.listItems[i].quantity > 1) {
+            state.listItems[i].quantity -= 1;
+            state.totalQuantity -= 1;
+          }
         }
       }
     },
@@ -111,7 +113,7 @@ export const cartSlice = createSlice({
     },
 
     //add to wishList
-    addRemoveWishlist: (state, { payload }) => {
+    toggleWishlistItem: (state, { payload }) => {
       let itemFound = false;
       let newArray = [];
 
@@ -218,7 +220,7 @@ export const {
   addQuantity,
   removeQuantity,
   deleteCart,
-  addRemoveWishlist,
+  toggleWishlistItem,
   resetStore,
 } = cartSlice.actions;
 export default cartSlice.reducer;
