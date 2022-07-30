@@ -63,6 +63,7 @@ export const cartSlice = createSlice({
 
     //adding quantity to an item from the cart
     addQuantity: (state, { payload }) => {
+      console.log(payload);
       state.totalQuantity += 1;
       state.listItems[payload.modelID].quantity += 1;
     },

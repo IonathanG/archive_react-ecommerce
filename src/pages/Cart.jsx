@@ -39,6 +39,7 @@ const Cart = () => {
       quantity: listItems[modelID].quantity,
       color: listItems[modelID].color,
       size: listItems[modelID].size,
+      modelID: listItems[modelID].modelID,
     }));
   }, [itemsData, listItems]);
 
@@ -62,6 +63,7 @@ const Cart = () => {
 
   // add quantity of a specific item
   const onAddItemQuantity = (item) => {
+    console.log(item.quantity);
     if (item.quantity < 9) {
       dispatch(addQuantity(item));
     }
