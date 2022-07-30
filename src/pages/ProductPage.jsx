@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { Add, Remove } from "@material-ui/icons";
 import { useParams } from "react-router-dom";
-import { popularProducts } from "../data";
 import { useDispatch } from "react-redux";
 import { addItem } from "../feature/cartSlice";
 import { NavLink } from "react-router-dom";
+import useProducts from "../hooks/useProducts";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const {
-    name: product_name,
-    price: product_price,
-    img: product_img,
-    desc: product_desc,
-  } = popularProducts[id];
+
+  const itemsData = useProducts();
+
+  const item = useMemo(() => {
+    return { ...itemsData.find((item) => item.id === parseInt(id)) };
+  }, [itemsData, id]);
 
   const sizeOptions = [
     { value: "XS", text: "XS" },
@@ -59,12 +59,12 @@ const ProductPage = () => {
       </NavLink>
       <div className="wrapper">
         <div className="img-container">
-          <img src={`../../${product_img}`} alt="picture_of_item" />
+          <img src={`../../${item.img}`} alt="picture_of_item" />
         </div>
         <div className="info-container">
-          <h1>{product_name}</h1>
-          <p className="description">{product_desc}</p>
-          <span className="price">$ {product_price}</span>
+          <h1>{item.name}</h1>
+          <p className="description">{item.desc}</p>
+          <span className="price">$ {item.price}</span>
           <div className="product-filter-container">
             <div className="filter">
               <div className="filter-title">Color</div>
@@ -122,13 +122,10 @@ const ProductPage = () => {
               onClick={() =>
                 dispatch(
                   addItem({
-                    name: product_name,
-                    price: product_price,
-                    img: product_img,
                     quantity: itemQuantity,
                     color: colorSelected,
                     size: sizeSelected,
-                    id,
+                    id: parseInt(id),
                     modelID: `${id + "-" + sizeSelected + "-" + colorSelected}`,
                   })
                 )

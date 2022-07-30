@@ -1,9 +1,14 @@
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { popularProducts } from "../data";
 
-// const useFetch = (url) => {
-//   const [data, setData] = useState([]);
+const useProducts = () => {
+  const [data, setData] = useState([]);
 
-//   return { data };
-// };
+  useEffect(() => {
+    setData(popularProducts);
+  }, []);
 
-// export default useFetch;
+  return data;
+};
+
+export default useProducts;

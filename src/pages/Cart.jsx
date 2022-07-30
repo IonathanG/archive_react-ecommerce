@@ -13,6 +13,7 @@ import { Add, DeleteOutline, Remove } from "@material-ui/icons";
 
 import Footer from "../components/Footer";
 import { useUser } from "../context/UserContext";
+import useProducts from "../hooks/useProducts";
 
 const Cart = () => {
   const user = useUser();
@@ -25,8 +26,21 @@ const Cart = () => {
   const [freeShipping, setFreeShipping] = useState(false);
 
   const location = useLocation();
+
   const wishListStatus = location.state;
   const [showWishList, setShowWishList] = useState(wishListStatus);
+
+  // -- retrieve data to display in cart from state + product database
+  const itemsData = useProducts();
+
+  const cartItems = useMemo(() => {
+    return Object.keys(listItems).map((modelID) => ({
+      ...itemsData.find((item) => item.id === listItems[modelID].id),
+      quantity: listItems[modelID].quantity,
+      color: listItems[modelID].color,
+      size: listItems[modelID].size,
+    }));
+  }, [itemsData, listItems]);
 
   // -- set total price of items in the cart --
   const totalPrice = useMemo(() => {
@@ -95,7 +109,7 @@ const Cart = () => {
               <span className="empty-cart">Your Shopping Cart is empty</span>
             )}
             <div className="products-list">
-              {Object.values(listItems).map((item, index) => {
+              {Object.values(cartItems).map((item, index) => {
                 return (
                   <div className="product" key={index}>
                     <div className="product-detail">
@@ -105,7 +119,8 @@ const Cart = () => {
                           <b>Product:</b> {item.name}
                         </span>
                         <span className="product-id">
-                          <b>REF:</b> {item.modelID}
+                          <b>REF:</b>{" "}
+                          {`${item.id + "-" + item.size + "-" + item.color}`}
                         </span>
                         <div
                           className="product-color"
@@ -133,7 +148,6 @@ const Cart = () => {
                     {listItems.length > 1 && <div className="hr"></div>}
                     <DeleteOutline
                       className="delete-product"
-                      // onClick={() => dispatch(removeItem(index))}
                       onClick={() => dispatch(removeItem(item))}
                     />
                   </div>

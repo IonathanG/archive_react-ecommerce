@@ -9,6 +9,7 @@ const Products = ({ type = "all", sortBy = "DEFAULT" }) => {
     return popularProducts
       .filter((item) => {
         if (type !== "all") {
+          console.log(item);
           return item.type === type;
         } else {
           return true;
