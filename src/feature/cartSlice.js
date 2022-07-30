@@ -34,9 +34,9 @@ export const getGuestData = createAsyncThunk("data/getGuestData", () => {
 });
 
 const initialState = {
-  listItems: [],
+  listItems: {},
   totalQuantity: 0,
-  wishList: [],
+  wishList: {},
   initUser: false,
 };
 
@@ -46,95 +46,53 @@ export const cartSlice = createSlice({
   reducers: {
     //add item to the cart or add quantity of an item already in the cart
     addItem: (state, { payload }) => {
-      let itemFound = false;
+      if (state.listItems[payload.modelID]) {
+        state.listItems[payload.modelID].quantity += payload.quantity;
+      } else {
+        state.listItems[payload.modelID] = { ...payload };
+      }
+
       state.totalQuantity += payload.quantity;
-
-      if (state.listItems.length > 0) {
-        for (let i = 0; i < state.listItems.length; i++) {
-          if (state.listItems[i].modelID === payload.modelID) {
-            state.listItems[i].quantity += payload.quantity;
-            itemFound = true;
-          }
-        }
-      }
-
-      if (!itemFound) {
-        state.listItems.push({
-          name: payload.name,
-          id: payload.id,
-          quantity: payload.quantity,
-          price: payload.price,
-          color: payload.color,
-          size: payload.size,
-          img: payload.img,
-          modelID: payload.modelID,
-        });
-      }
     },
 
     //remove an item from the cart
     removeItem: (state, { payload }) => {
-      let newArray = [];
-
-      for (let i = 0; i < state.listItems.length; i++) {
-        i !== payload
-          ? newArray.push(state.listItems[i])
-          : (state.totalQuantity -= state.listItems[i].quantity);
-      }
-      state.listItems = [...newArray];
+      state.totalQuantity -= state.listItems[payload.modelID].quantity;
+      delete state.listItems[payload.modelID];
     },
 
     //adding quantity to an item from the cart
     addQuantity: (state, { payload }) => {
-      for (let i = 0; i < state.listItems.length; i++) {
-        if (state.listItems[i].modelID === payload.modelID) {
-          state.listItems[i].quantity += 1;
-          state.totalQuantity += 1;
-        }
-      }
+      state.totalQuantity += 1;
+      state.listItems[payload.modelID].quantity += 1;
     },
 
     //removing quantity to an item from the cart
     removeQuantity: (state, { payload }) => {
-      for (let i = 0; i < state.listItems.length; i++) {
-        if (state.listItems[i].modelID === payload.modelID) {
-          if (state.listItems[i].quantity > 1) {
-            state.listItems[i].quantity -= 1;
-            state.totalQuantity -= 1;
-          }
-        }
-      }
+      state.totalQuantity -= 1;
+      state.listItems[payload.modelID].quantity -= 1;
     },
 
     //delete listItems
     deleteCart: (state) => {
-      state.listItems = [];
+      state.listItems = {};
       state.totalQuantity = 0;
     },
 
     //add to wishList
     toggleWishlistItem: (state, { payload }) => {
-      let itemFound = false;
-      let newArray = [];
-
-      if (state.wishList.length > 0) {
-        for (let i = 0; i < state.wishList.length; i++) {
-          state.wishList[i].id !== payload.id
-            ? newArray.push(state.wishList[i])
-            : (itemFound = true);
-        }
+      if (state.wishList[payload.id]) {
+        delete state.wishList[payload.id];
+      } else {
+        state.wishList[payload.id] = { ...payload };
       }
-
-      itemFound
-        ? (state.wishList = [...newArray])
-        : state.wishList.push(payload);
     },
 
     //reset the store on session logout
     resetStore: (state) => {
-      state.listItems = [];
+      state.listItems = {};
       state.totalQuantity = 0;
-      state.wishList = [];
+      state.wishList = {};
     },
   },
 
@@ -144,50 +102,44 @@ export const cartSlice = createSlice({
       state.initUser = false;
     },
     [getUserData.fulfilled]: (state, { payload }) => {
+      // case localStorage is empty
       if (payload.storedData === undefined) {
         state.listItems = payload.dataDB.listItems;
         state.totalQuantity = payload.dataDB.totalQuantity;
         state.wishList = payload.dataDB.wishList;
       } else {
-        // listItems
-        // merge both listItems
-        // remove duplicates and add quantities of item with similar id, color and size
-        if (payload.dataDB.listItems.length > 0) {
-          const newListItems = [
-            ...payload.dataDB.listItems,
-            ...payload.storedData.listItems,
-          ];
+        // ----- listItems -----
+        // merge both listItems // add quantities without duplicate keys
+        if (Object.keys(payload.dataDB.listItems).length > 0) {
+          state.listItems = payload.dataDB.listItems;
 
-          for (let i = 0; i < newListItems.length; i++) {
-            for (let j = i + 1; j < newListItems.length; j++) {
-              if (newListItems[i].modelID === newListItems[j].modelID) {
-                newListItems[i].quantity += newListItems[j].quantity;
-                newListItems.splice(j--, 1);
-              }
+          Object.keys(payload.storedData.listItems).forEach((item) => {
+            if (state.listItems[item]) {
+              state.listItems[item].quantity +=
+                payload.storedData[item].quantity;
+            } else {
+              state.listItems[item] = { ...payload.storedData.listItems[item] };
             }
-          }
-          state.listItems = newListItems;
+          });
         } else {
-          state.listItems = payload.storedData.listItems;
+          state.listItems = payload.dataDB.listItems;
         }
-        // totalQuantity
+
+        // ----- totalQuantity -----
         state.totalQuantity =
           payload.dataDB.totalQuantity + payload.storedData.totalQuantity;
 
-        // wishList
-        if (payload.dataDB.wishList.length > 0) {
-          // only keeping items with different id => avoid duplicate in wishList
-          let id_wishList = new Set(
-            payload.dataDB.wishList.map((item) => item.id)
-          );
-          state.wishList = [
-            ...payload.dataDB.wishList,
-            ...payload.storedData.wishList.filter(
-              (item) => !id_wishList.has(item.id)
-            ),
-          ];
+        // ----- wishList -----
+        if (Object.keys(payload.dataDB.wishList).length > 0) {
+          state.wishList = payload.dataDB.wishList;
+
+          Object.keys(payload.storedData.wishList).forEach((item) => {
+            if (!state.wishList[item]) {
+              state.wishList[item] = { ...payload.storedData.wishList[item] };
+            }
+          });
         } else {
-          state.wishList = payload.storedData.wishList;
+          state.wishList = payload.dataDB.wishList;
         }
       }
       state.initUser = true;

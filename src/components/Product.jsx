@@ -29,7 +29,6 @@ const Product = ({ item }) => {
     dispatch(
       toggleWishlistItem({
         name: item.name,
-        price: item.price,
         img: item.img,
         id: item.id,
       })
@@ -37,18 +36,23 @@ const Product = ({ item }) => {
   };
 
   useEffect(() => {
-    let itemFound = false;
-
-    for (let i = 0; i < wishList.length; i++) {
-      if (wishList[i].id === item.id) {
-        itemFound = true;
-      }
-    }
-    if (itemFound) {
+    if (wishList[item.id]) {
       setIsFavorite(true);
     } else {
       setIsFavorite(false);
     }
+    // let itemFound = false;
+
+    // for (let i = 0; i < wishList.length; i++) {
+    //   if (wishList[i].id === item.id) {
+    //     itemFound = true;
+    //   }
+    // }
+    // if (itemFound) {
+    //   setIsFavorite(true);
+    // } else {
+    //   setIsFavorite(false);
+    // }
   }, [wishList, item.id]);
 
   return (

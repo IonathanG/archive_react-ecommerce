@@ -32,7 +32,9 @@ const Cart = () => {
   const totalPrice = useMemo(() => {
     let sum_Price = 0;
 
-    listItems.forEach((item) => (sum_Price += item.price * item.quantity));
+    Object.values(listItems).forEach(
+      (item) => (sum_Price += item.price * item.quantity)
+    );
 
     if (sum_Price >= 50) {
       setFreeShipping(true);
@@ -77,7 +79,7 @@ const Cart = () => {
               className={`topText ${showWishList ? "topText-active" : ""}`}
               onClick={() => setShowWishList(true)}
             >
-              Your Wishlist ({wishList.length})
+              Your Wishlist ({Object.keys(wishList).length})
             </span>
           </div>
           <button
@@ -93,49 +95,52 @@ const Cart = () => {
               <span className="empty-cart">Your Shopping Cart is empty</span>
             )}
             <div className="products-list">
-              {listItems.map((item, index) => (
-                <div className="product" key={index}>
-                  <div className="product-detail">
-                    <img src={item.img} alt="product_image" />
-                    <div className="details">
-                      <span className="product-name">
-                        <b>Product:</b> {item.name}
-                      </span>
-                      <span className="product-id">
-                        <b>REF:</b> {item.modelID}
-                      </span>
-                      <div
-                        className="product-color"
-                        style={{ backgroundColor: `${item.color}` }}
-                      ></div>
-                      <span className="product-size">
-                        <b>Size:</b> {item.size}
-                      </span>
+              {Object.values(listItems).map((item, index) => {
+                return (
+                  <div className="product" key={index}>
+                    <div className="product-detail">
+                      <img src={item.img} alt="product_image" />
+                      <div className="details">
+                        <span className="product-name">
+                          <b>Product:</b> {item.name}
+                        </span>
+                        <span className="product-id">
+                          <b>REF:</b> {item.modelID}
+                        </span>
+                        <div
+                          className="product-color"
+                          style={{ backgroundColor: `${item.color}` }}
+                        ></div>
+                        <span className="product-size">
+                          <b>Size:</b> {item.size}
+                        </span>
+                      </div>
                     </div>
+                    <div className="price-detail">
+                      <div className="product-amount-container">
+                        <span onClick={() => onRemoveItemQuantity(item)}>
+                          <Remove />
+                        </span>
+                        <div className="product-amount">{item.quantity}</div>
+                        <span onClick={() => onAddItemQuantity(item)}>
+                          <Add />
+                        </span>
+                      </div>
+                      <div className="product-price">
+                        $ {item.price * item.quantity}
+                      </div>
+                    </div>
+                    {listItems.length > 1 && <div className="hr"></div>}
+                    <DeleteOutline
+                      className="delete-product"
+                      // onClick={() => dispatch(removeItem(index))}
+                      onClick={() => dispatch(removeItem(item))}
+                    />
                   </div>
-                  <div className="price-detail">
-                    <div className="product-amount-container">
-                      <span onClick={() => onRemoveItemQuantity(item)}>
-                        <Remove />
-                      </span>
-                      <div className="product-amount">{item.quantity}</div>
-                      <span onClick={() => onAddItemQuantity(item)}>
-                        <Add />
-                      </span>
-                    </div>
-                    <div className="product-price">
-                      $ {item.price * item.quantity}
-                    </div>
-                  </div>
-                  {listItems.length > 1 && <div className="hr"></div>}
-                  <DeleteOutline
-                    className="delete-product"
-                    onClick={() => dispatch(removeItem(index))}
-                  />
-                </div>
-              ))}
+                );
+              })}
             </div>
-            {listItems.length > 0 && (
+            {Object.keys(listItems).length > 0 && (
               <div className="summary">
                 <h1 className="summary-title">ORDER SUMMARY</h1>
                 <div className="summary-item">
@@ -185,31 +190,33 @@ const Cart = () => {
         )}
         {showWishList && (
           <div className="bottom-Wishlist">
-            {wishList.length === 0 && (
+            {Object.keys(wishList).length === 0 && (
               <span className="empty-wishlist">Your Wishlist is empty</span>
             )}
             <div className="wishlist-container">
-              {wishList.map((item, index) => (
-                <div className="product" key={index}>
-                  <img src={item.img} alt="product_image" />
-                  <div className="details">
-                    <span className="product-name">
-                      <b>Product:</b> {item.name}
-                    </span>
-                    <div className="button-container">
-                      <Link to={`/product/${item.id}`}>
-                        <button className="check-button">See product</button>
-                      </Link>
-                      <button
-                        className="remove-button"
-                        onClick={() => dispatch(toggleWishlistItem(item))}
-                      >
-                        Remove from wishlist
-                      </button>
+              {Object.values(wishList).map((item, index) => {
+                return (
+                  <div className="product" key={index}>
+                    <img src={item.img} alt="product_image" />
+                    <div className="details">
+                      <span className="product-name">
+                        <b>Product:</b> {item.name}
+                      </span>
+                      <div className="button-container">
+                        <Link to={`/product/${item.id}`}>
+                          <button className="check-button">See product</button>
+                        </Link>
+                        <button
+                          className="remove-button"
+                          onClick={() => dispatch(toggleWishlistItem(item))}
+                        >
+                          Remove from wishlist
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
