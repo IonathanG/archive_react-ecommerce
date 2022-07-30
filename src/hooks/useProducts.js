@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
-const useFetch = (url) => {
-  const [data, setData] = useState([]);
+// const useFetch = (url) => {
+//   const [data, setData] = useState([]);
 
-  return { data };
-};
+//   return { data };
+// };
 
-export default useFetch;
+// export default useFetch;

@@ -102,44 +102,39 @@ export const cartSlice = createSlice({
       state.initUser = false;
     },
     [getUserData.fulfilled]: (state, { payload }) => {
-      // case localStorage is empty
-      if (payload.storedData === undefined) {
-        state.listItems = payload.dataDB.listItems;
-        state.totalQuantity = payload.dataDB.totalQuantity;
-        state.wishList = payload.dataDB.wishList;
-      } else {
+      state.listItems = payload.dataDB.listItems;
+      state.totalQuantity = payload.dataDB.totalQuantity;
+      state.wishList = payload.dataDB.wishList;
+
+      // case localStorage is not empty
+      if (payload.storedData !== undefined) {
         // ----- listItems -----
         // merge both listItems // add quantities without duplicate keys
         if (Object.keys(payload.dataDB.listItems).length > 0) {
-          state.listItems = payload.dataDB.listItems;
-
           Object.keys(payload.storedData.listItems).forEach((item) => {
             if (state.listItems[item]) {
               state.listItems[item].quantity +=
-                payload.storedData[item].quantity;
+                payload.storedData.listItems[item].quantity;
             } else {
               state.listItems[item] = { ...payload.storedData.listItems[item] };
             }
           });
         } else {
-          state.listItems = payload.dataDB.listItems;
+          state.listItems = payload.storedData.listItems;
         }
 
         // ----- totalQuantity -----
-        state.totalQuantity =
-          payload.dataDB.totalQuantity + payload.storedData.totalQuantity;
+        state.totalQuantity += payload.storedData.totalQuantity;
 
         // ----- wishList -----
         if (Object.keys(payload.dataDB.wishList).length > 0) {
-          state.wishList = payload.dataDB.wishList;
-
           Object.keys(payload.storedData.wishList).forEach((item) => {
             if (!state.wishList[item]) {
               state.wishList[item] = { ...payload.storedData.wishList[item] };
             }
           });
         } else {
-          state.wishList = payload.dataDB.wishList;
+          state.wishList = payload.storedData.wishList;
         }
       }
       state.initUser = true;
