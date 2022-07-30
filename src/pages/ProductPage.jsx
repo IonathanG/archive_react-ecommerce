@@ -59,7 +59,7 @@ const ProductPage = () => {
       </NavLink>
       <div className="wrapper">
         <div className="img-container">
-          <img src={product_img} alt="picture_of_item" />
+          <img src={`../../${product_img}`} alt="picture_of_item" />
         </div>
         <div className="info-container">
           <h1>{product_name}</h1>

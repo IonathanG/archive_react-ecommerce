@@ -41,18 +41,6 @@ const Product = ({ item }) => {
     } else {
       setIsFavorite(false);
     }
-    // let itemFound = false;
-
-    // for (let i = 0; i < wishList.length; i++) {
-    //   if (wishList[i].id === item.id) {
-    //     itemFound = true;
-    //   }
-    // }
-    // if (itemFound) {
-    //   setIsFavorite(true);
-    // } else {
-    //   setIsFavorite(false);
-    // }
   }, [wishList, item.id]);
 
   return (
