@@ -47,7 +47,7 @@ const Cart = () => {
   const totalPrice = useMemo(() => {
     let sum_Price = 0;
 
-    Object.values(listItems).forEach(
+    Object.values(cartItems).forEach(
       (item) => (sum_Price += item.price * item.quantity)
     );
 
@@ -58,7 +58,7 @@ const Cart = () => {
     }
 
     return sum_Price;
-  }, [listItems]);
+  }, [cartItems]);
   // -----------
 
   // add quantity of a specific item
