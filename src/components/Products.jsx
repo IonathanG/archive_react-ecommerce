@@ -1,12 +1,14 @@
 import React, { useMemo } from "react";
-import { popularProducts } from "../data";
+import useProducts from "../hooks/useProducts";
 import Product from "./Product";
 
 const Products = ({ type = "all", sortBy = "DEFAULT" }) => {
+  const itemsData = useProducts();
+
   // useMemo to sort out and filter items
   // avoid uneccessary computing
   const productsDisplayed = useMemo(() => {
-    return popularProducts
+    return itemsData
       .filter((item) => {
         if (type !== "all") {
           console.log(item);
@@ -27,7 +29,7 @@ const Products = ({ type = "all", sortBy = "DEFAULT" }) => {
         }
       })
       .map((item) => <Product item={item} key={item.id} />);
-  }, [type, sortBy]);
+  }, [type, sortBy, itemsData]);
 
   return <div className="products-container">{productsDisplayed}</div>;
 };

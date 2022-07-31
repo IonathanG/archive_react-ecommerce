@@ -1,8 +1,9 @@
 import React from "react";
-import { categories } from "../data";
+import useCategories from "../hooks/useCategories";
 import CategoryItem from "./CategoryItem";
 
 const Categories = () => {
+  const categories = useCategories();
   return (
     <div className="categories-container">
       {categories.map((item) => (

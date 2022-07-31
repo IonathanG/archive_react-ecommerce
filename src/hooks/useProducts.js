@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { popularProducts } from "../data";
+import Products from "../data.json";
 
 const useProducts = () => {
-  const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setData(popularProducts);
+    setProducts(Products.popularProducts);
   }, []);
 
-  return data;
+  return products;
 };
 
 export default useProducts;

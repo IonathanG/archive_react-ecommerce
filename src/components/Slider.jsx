@@ -1,9 +1,11 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { sliderItems } from "../data";
+import useSliders from "../hooks/useSliders";
 
 const Slider = () => {
+  const sliderItems = useSliders();
+
   const [slideIndex, setSlideIndex] = useState(0);
   const [isSliderClicked, setIsSliderClicked] = useState(false);
 
